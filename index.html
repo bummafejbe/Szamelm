@@ -54,15 +54,13 @@ section.part.active{display:block}
 .part-head .no{font-family:"JetBrains Mono",monospace;color:var(--acc);font-weight:600;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase}
 .part-head h2{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(1.7rem,5vw,2.5rem);margin:.12em 0 .18em;letter-spacing:-.01em;color:#fff}
 .part-head p.lead{color:var(--tx2);margin:.1em 0 0;max-width:74ch}
-.topic{font-family:"Fraunces",serif;font-weight:600;font-size:1.16rem;margin:38px 0 6px;padding-bottom:8px;border-bottom:1px solid var(--line2);color:var(--tx);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.topic{font-family:"Fraunces",serif;font-weight:600;font-size:1.16rem;margin:38px 0 6px;padding-bottom:8px;border-bottom:1px solid var(--line2);color:var(--tx);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;scroll-margin-top:84px}
 .topic::before{content:"";align-self:center;width:9px;height:9px;border-radius:3px;background:var(--acc)}
 .topic .ix{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--tx3);font-weight:400}
 /* TF cards */
 .tf{background:var(--surf);border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:var(--rs);padding:15px 17px;margin:11px 0;transition:border-color .15s}
 .tf:hover{border-color:var(--line2)}
 .tf .stmt{margin:0;color:var(--tx)}
-.tf .reveal{margin-top:11px;font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.08em;border:1px solid var(--line2);background:var(--surf2);border-radius:7px;padding:6px 13px;cursor:pointer;color:var(--tx2)}
-.tf .reveal:hover{border-color:var(--acc);color:var(--acc)}
 .tf .ans{margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
 .tf .ans p{margin:.45em 0 0;color:var(--read)}
 .badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-weight:600;font-size:.7rem;letter-spacing:.1em;padding:3px 10px;border-radius:6px}
@@ -72,12 +70,78 @@ section.part.active{display:block}
 .tf[data-answer="H"]{border-left-color:var(--false)}
 .note{margin-top:11px;background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:7px;padding:10px 13px;font-size:.92em;color:var(--read)}
 .note b{color:var(--warn)}
-/* practice mode */
-body.practice .tf .ans{display:none}
-body.practice .tf.show .ans{display:block}
-.tf .reveal{display:none}
-body.practice .tf .reveal{display:inline-block}
-body.practice .tf.show .reveal{display:none}
+/* Tippelés */
+.tf .ans{display:none}
+.tf.show .ans{display:block}
+.guess{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.gbtn{font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.06em;border:1px solid var(--line2);background:var(--surf2);color:var(--tx);border-radius:7px;padding:6px 18px;cursor:pointer;transition:.14s}
+.gbtn[data-g="I"]:hover{border-color:var(--true-bd);color:var(--true)}
+.gbtn[data-g="H"]:hover{border-color:var(--false-bd);color:var(--false)}
+.gshow{background:none;border:none;color:var(--tx3);font-size:.7rem;cursor:pointer;font-family:"JetBrains Mono",monospace;text-decoration:underline;padding:6px 4px}
+.gshow:hover{color:var(--acc)}
+.gfb{font-family:"JetBrains Mono",monospace;font-size:.78rem;font-weight:600}
+.gfb.right{color:var(--true)}.gfb.wrong{color:var(--false)}
+.tf.guessed .gbtn{opacity:.4;pointer-events:none}
+.tf.guessed .gshow{display:none}
+.gbtn.picked{outline:2px solid currentColor}
+.resetbtn{font-family:"JetBrains Mono",monospace;font-size:.64rem;border:1px solid var(--line2);background:none;color:var(--tx3);border-radius:7px;padding:4px 10px;cursor:pointer;margin-left:8px;font-weight:400}
+.resetbtn:hover{border-color:var(--false-bd);color:var(--false)}
+/* Tanulós mód */
+body.study .tf .ans{display:block}
+body.study .guess{display:none}
+body.study .qa .a,body.study .qa .why{display:block}
+body.study .qa .showans{display:none}
+body.study #resz3 .def>.body{display:block}
+body.study #resz3 .def .showans{display:none}
+/* Önértékelés */
+.qa .a,.qa .why{display:none}
+.qa.show .a,.qa.show .why{display:block}
+#resz3 .def>.body{display:none}
+#resz3 .def.show>.body{display:block}
+.showans{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.08em;border:1px solid var(--line2);background:var(--surf2);border-radius:7px;padding:6px 13px;cursor:pointer;color:var(--tx2);margin-top:10px}
+.showans:hover{border-color:var(--acc);color:var(--acc)}
+.qa.show .showans,#resz3 .def.show .showans{display:none}
+.markbar{display:flex;gap:7px;align-items:center;margin-top:12px;flex-wrap:wrap;padding-top:10px;border-top:1px dashed var(--line)}
+.markbar .ml{font-family:"JetBrains Mono",monospace;font-size:.64rem;color:var(--tx3);letter-spacing:.12em;text-transform:uppercase}
+.mbtn{font-family:"JetBrains Mono",monospace;font-size:.7rem;border:1px solid var(--line2);background:var(--surf2);color:var(--tx2);border-radius:7px;padding:5px 12px;cursor:pointer;transition:.14s}
+.mbtn[data-m="ok"].on{background:var(--true-bg);color:var(--true);border-color:var(--true-bd)}
+.mbtn[data-m="part"].on{background:var(--warn-bg);color:var(--warn);border-color:var(--warn-bd)}
+.mbtn[data-m="bad"].on{background:var(--false-bg);color:var(--false);border-color:var(--false-bd)}
+.sdot{float:right;width:10px;height:10px;border-radius:50%;background:var(--line2);margin:4px 0 0 10px;flex:0 0 auto}
+[data-mark="ok"] .sdot{background:var(--true)}
+[data-mark="part"] .sdot{background:var(--warn)}
+[data-mark="bad"] .sdot{background:var(--false)}
+/* Haladás */
+.tprog{font-family:"JetBrains Mono",monospace;font-size:.66rem;color:var(--tx3);margin-left:auto;display:flex;align-items:center;gap:7px;font-weight:400}
+.tprog .bar{width:72px;height:6px;border-radius:3px;background:var(--surf3);overflow:hidden;display:inline-block}
+.tprog .bar i{display:block;height:100%;background:var(--true);border-radius:3px}
+#dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0}
+#dash .dcard{background:var(--surf);border:1px solid var(--line);border-radius:var(--rs);padding:13px 15px}
+#dash .dcard .dt{font-family:"Fraunces",serif;font-weight:600;color:var(--tx);font-size:.95rem}
+#dash .dcard .dn{font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--tx2);margin-top:4px}
+#dash .dcard .bar{height:7px;border-radius:4px;background:var(--surf3);margin-top:9px;overflow:hidden}
+#dash .dcard .bar i{display:block;height:100%;background:var(--acc);border-radius:4px}
+body.filterbad [data-qid][data-mark="ok"]{display:none}
+/* Tananyag */
+#ltoc{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:16px 0 34px}
+#ltoc a{display:flex;gap:10px;align-items:baseline;background:var(--surf);border:1px solid var(--line);border-radius:var(--rs);padding:11px 14px;color:var(--tx);text-decoration:none;font-family:"Fraunces",serif;font-weight:600;font-size:.92rem}
+#ltoc a:hover{border-color:var(--acc)}
+#ltoc .lno{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--acc)}
+#ltoc .ldone-ic{margin-left:auto;color:var(--true);font-size:.85rem;visibility:hidden}
+#ltoc a.done .ldone-ic{visibility:visible}
+.lesson{border:1px solid var(--line);border-radius:var(--r);margin:30px 0;background:var(--surf);overflow:hidden;scroll-margin-top:84px}
+.lesson>.lh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,rgba(94,200,176,.10),transparent)}
+.lesson>.lh .lno{font-family:"JetBrains Mono",monospace;font-size:.7rem;color:var(--acc);letter-spacing:.16em}
+.lesson>.lh h3{font-family:"Fraunces",serif;font-weight:900;font-size:1.45rem;margin:0;color:#fff;flex:1 1 auto}
+.ldone{font-family:"JetBrains Mono",monospace;font-size:.7rem;border:1px solid var(--line2);background:var(--surf2);color:var(--tx2);border-radius:7px;padding:6px 13px;cursor:pointer}
+.lesson.done .ldone{background:var(--true-bg);color:var(--true);border-color:var(--true-bd)}
+.lesson .lpre{padding:10px 20px;border-bottom:1px solid var(--line);font-size:.84rem;color:var(--tx3);display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}
+.lesson .lbody{padding:6px 20px 22px}
+.lesson .lbody h4{font-family:"Fraunces",serif;color:var(--acc);font-size:1.12rem;margin:26px 0 6px}
+.lesson .lbody p{color:var(--read)}
+.lesson .golinks{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);display:flex;gap:9px;flex-wrap:wrap}
+.lesson .golinks a{font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--acc);border:1px solid var(--line2);border-radius:20px;padding:5px 13px;text-decoration:none}
+.lesson .golinks a:hover{border-color:var(--acc)}
 /* QA cards */
 .qa{background:var(--surf);border:1px solid var(--line);border-radius:var(--rs);padding:17px 19px;margin:14px 0}
 .qa .q{font-weight:600;font-family:"Fraunces",serif;font-size:1.04rem;margin:0 0 4px;color:#fff}
@@ -151,6 +215,22 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
 .gcard .pre .pl{font-family:"JetBrains Mono",monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
 .gcard .pre .clink{font-size:.76rem;font-family:"JetBrains Mono",monospace;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:3px 9px;border-bottom:1px solid var(--line)}
 .gcard .pre .clink:hover{border-color:var(--acc)}
+/* Belépés */
+#login{position:fixed;inset:0;z-index:100;background:rgba(11,14,18,.96);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:22px}
+#login.hide{display:none}
+#login .box{background:var(--surf);border:1px solid var(--line2);border-radius:var(--r);padding:34px 30px;max-width:420px;width:100%}
+#login h2{font-family:"Fraunces",serif;font-weight:900;margin:0 0 6px;color:#fff;font-size:1.6rem}
+#login p{color:var(--tx2);margin:.3em 0 1.1em;font-size:.95rem}
+#login input{width:100%;font-family:"JetBrains Mono",monospace;font-size:1rem;border:1px solid var(--line2);background:var(--bg2);color:var(--tx);border-radius:9px;padding:11px 13px;outline:none}
+#login input:focus{border-color:var(--acc)}
+#login button{margin-top:13px;width:100%;font-family:"Fraunces",serif;font-weight:600;font-size:1rem;background:var(--acc);color:#06231d;border:none;border-radius:9px;padding:11px;cursor:pointer}
+#login .err{color:var(--false);font-size:.84rem;margin-top:8px;display:none}
+.userchip{display:flex;gap:7px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--acc)}
+.userchip button{background:none;border:1px solid var(--line2);color:var(--tx3);border-radius:7px;padding:4px 9px;font-size:.68rem;cursor:pointer;font-family:inherit}
+.userchip button:hover{border-color:var(--acc);color:var(--acc)}
+#syncdot{width:8px;height:8px;border-radius:50%;background:var(--tx3);display:inline-block;flex:0 0 auto}
+#syncdot.on{background:var(--true)}
+#syncdot.err{background:var(--warn)}
 /* Responsive */
 @media(max-width:760px){
   body{font-size:16px}
@@ -170,6 +250,15 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
 </style>
 </head>
 <body>
+<div id="login" class="hide">
+  <div class="box">
+    <h2>Ki tanul ma?</h2>
+    <p>Írd be a neved — a haladásod ehhez a névhez mentődik, és telefonon is folytathatod. Nincs jelszó.</p>
+    <input id="login-name" type="text" maxlength="30" placeholder="pl. tomi" autocomplete="off">
+    <div class="err" id="login-err">Adj meg egy nevet (legalább 2 betű).</div>
+    <button id="login-go">Belépés</button>
+  </div>
+</div>
 <header class="top"><div class="wrap">
   <div class="kick">Vizsgafelkészítő · ELTE/SZTE stílusú tételsor</div>
   <h1>A számításelmélet<br>alapjai 1</h1>
@@ -180,24 +269,675 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
 </div></header>
 
 <nav class="tabs"><div class="wrap">
+  <button class="tab" data-t="tananyag">Tananyag</button>
   <button class="tab active" data-t="attekintes">Áttekintés</button>
   <button class="tab" data-t="resz1">1 · Igaz/Hamis</button>
   <button class="tab" data-t="resz2">2 · Rövid válaszok</button>
   <button class="tab" data-t="resz3">3 · Kifejtős</button>
   <button class="tab" data-t="fogalomtar">Fogalomtár</button>
   <div class="tools">
+    <span class="userchip"><span id="syncdot" title="szinkron állapota"></span><span id="uname"></span><button id="switchuser">Váltás</button></span>
+    <label class="toggle"><input type="checkbox" id="study"> Tanulós mód</label>
+    <label class="toggle"><input type="checkbox" id="onlybad"> Csak amit nem értek</label>
     <input id="search" type="search" placeholder="keresés…" autocomplete="off">
-    <label class="toggle"><input type="checkbox" id="prac"> Gyakorló mód</label>
   </div>
 </div></nav>
 
 <main class="wrap">
 
+<section class="part" id="tananyag">
+  <div class="part-head"><div class="no">Tananyag · 7 lecke</div>
+    <h2>Egymásra épülő leckék</h2>
+    <p class="lead">A teljes anyag hét leckében, az alapoktól a tételekig. Minden lecke a korábbiakra épül — haladj sorban. A lecke végén linkek visznek a hozzá tartozó gyakorló kérdésekhez.</p>
+  </div>
+  <div id="ltoc"></div>
+
+  <div class="lesson" id="lecke-1" data-lid="l1">
+    <div class="lh"><span class="lno">1. LECKE</span><h3>Alapfogalmak: ábécé, szó, nyelv</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel: nincs — itt kezdj!</span></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> a tárgy minden további fogalma — grammatikák, automaták, nyelvosztályok — erre a néhány definícióra épül. A vizsga igaz/hamis részének jó harmada azon múlik, hogy ezeket <em class="t">pontosan</em> tudod-e, nem csak nagyjából. Itt dől el például, hogy átlátod-e: az üres szó, az üres nyelv és az üres szót tartalmazó nyelv <strong>három különböző dolog</strong>.</p>
+
+      <h4>Ábécé és szó</h4>
+      <div class="def blue"><div class="h">Ábécé, betű, szó, hossz</div><div class="body">
+        <p><strong>Ábécé:</strong> egy véges, nemüres halmaz (jele: <span class="m">V</span> vagy <span class="m">Σ</span>); az elemeit <strong>betűknek</strong> nevezzük. <strong>Szó</strong> (string): az ábécé betűiből képzett <em class="t">véges</em> sorozat. A <span class="m">u = t₁…tₙ</span> szó <strong>hossza</strong> a betűinek száma: <span class="m">|u| = n</span>.</p>
+        <p><strong>Példa:</strong> <span class="m">V={a,b}</span> esetén <span class="m">abba</span> és <span class="m">aabba</span> egy-egy V feletti szó, <span class="m">|aabba|=5</span>. Az <span class="m">aabba</span> és a <span class="m">baaba</span> <strong>különböző</strong> szavak, pedig mindkettő 5 hosszú, és mindkettőben 3 db <span class="m">a</span> és 2 db <span class="m">b</span> van — <strong>a betűk sorrendje számít!</strong></p>
+      </div></div>
+      <div class="def gold"><div class="h">Az üres szó (ε) — és ami NEM az</div><div class="body">
+        <p>Az <span class="m">ε</span> a 0 hosszú szó: <span class="m">|ε| = 0</span>. Három, gyakran összekevert objektum:</p>
+        <ul>
+          <li><span class="m">ε</span> — egy <strong>szó</strong> (a legrövidebb);</li>
+          <li><span class="m">∅</span> — az <strong>üres nyelv</strong>: egyetlen szava sincs, <span class="m">ε ∉ ∅</span>;</li>
+          <li><span class="m">{ε}</span> — egy <strong>egyszavas nyelv</strong>, aminek egyetlen szava az üres szó.</li>
+        </ul>
+        <p>Tehát <span class="m">∅ ≠ {ε}</span>, és <span class="m">|∅|=0</span>, de <span class="m">|{ε}|=1</span>. Erre több igaz/hamis kérdés is rájátszik.</p>
+      </div></div>
+
+      <h4>Műveletek szavakon</h4>
+      <div class="def blue"><div class="h">Konkatenáció (egymás után fűzés)</div><div class="body">
+        <p>Ha <span class="m">u = s₁…sₙ</span> és <span class="m">v = t₁…tₖ</span>, akkor <span class="m">uv := s₁…sₙt₁…tₖ</span> — az u betűi után írjuk v betűit. Nyilván <span class="m">|uv| = |u|+|v|</span>.</p>
+        <p><strong>Példa:</strong> <span class="m">u=abb</span>, <span class="m">v=aaaba</span> → <span class="m">uv=abbaaaba</span>, de <span class="m">vu=aaabaabb</span>. A művelet <strong>asszociatív</strong> (<span class="m">u(vw)=(uv)w</span>), de általában <strong>nem kommutatív</strong> (<span class="m">uv ≠ vu</span> — kivéve pl. az egybetűs ábécét). Egységeleme az <span class="m">ε</span>: <span class="m">uε = εu = u</span>.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Szó hatványa</div><div class="body">
+        <p><span class="m">u⁰ := ε</span>, <span class="m">uⁱ := u·uⁱ⁻¹</span> — az u szó i példányának konkatenáltja. Példa: <span class="m">u=abb</span> → <span class="m">u² = abbabb</span>, <span class="m">u³ = abbabbabb</span>.</p>
+        <p><strong>Vigyázat:</strong> <span class="m">(ab)³ = ababab</span>, míg <span class="m">a³b³ = aaabbb</span> — a kettő <strong>nem ugyanaz</strong>! A hatványozás az egész szót ismétli, nem a betűit külön-külön.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Tükörkép (uᴿ)</div><div class="body">
+        <p><span class="m">uᴿ</span> az u betűi fordított sorrendben: ha <span class="m">u = a₁…aₙ</span>, akkor <span class="m">uᴿ = aₙ…a₁</span>. Példa: <span class="m">(baabba)ᴿ = abbaab</span>. Ha <span class="m">u = uᴿ</span>, a szó <strong>palindróma</strong> (pl. <span class="m">abba</span>).</p>
+        <p>Hasznos azonosságok: <span class="m">εᴿ=ε</span>, <span class="m">(uᴿ)ᴿ=u</span>, <span class="m">(uv)ᴿ = vᴿuᴿ</span> (a sorrend megfordul!), <span class="m">(uⁱ)ᴿ=(uᴿ)ⁱ</span>.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Részszó, prefix, suffix</div><div class="body">
+        <p>Az u szó a v <strong>részszava</strong>, ha <span class="m">v = xuy</span> valamely <span class="m">x,y ∈ V*</span> szavakra. Ha <span class="m">x=ε</span>: u <strong>prefix</strong> (kezdőszelet); ha <span class="m">y=ε</span>: u <strong>suffix</strong> (végszelet). <em class="t">Valódi</em> prefix/suffix: az ε-tól és magától a szótól különböző.</p>
+        <p><strong>Példa végig:</strong> <span class="m">u = abba</span>.</p>
+        <ul>
+          <li>prefixei: <span class="m">ε, a, ab, abb, abba</span></li>
+          <li>suffixei: <span class="m">ε, a, ba, bba, abba</span></li>
+          <li>részszavai: <span class="m">ε, a, b, ab, bb, ba, abb, bba, abba</span></li>
+        </ul>
+        <p><strong>Az <span class="m">abb</span> NEM suffixe az <span class="m">abba</span>-nak!</strong> A suffixet a szó <em class="t">végéről visszafelé</em> kell olvasni — a suffix nem a tükörkép prefixe.</p>
+      </div></div>
+
+      <h4>Nyelv, V* és V⁺</h4>
+      <div class="def green"><div class="h">Nyelv</div><div class="body">
+        <p>A <span class="m">V*</span> jelöli a V feletti <strong>összes</strong> szó halmazát (ε-nal együtt); <span class="m">V⁺ = V*\{ε}</span> a nemüres szavakét. Pl. <span class="m">V={a,b}</span>: <span class="m">V* = {ε, a, b, aa, ab, ba, bb, aaa, …}</span> (hosszlexikografikus felsorolás: előbb a rövidebb, azonos hossznál „lexikon-sorrend").</p>
+        <p><strong>Nyelv:</strong> V* tetszőleges részhalmaza, <span class="m">L ⊆ V*</span>. Lehet üres (∅), véges vagy végtelen. Példák V={a,b} felett:</p>
+        <ul>
+          <li><span class="m">L₁ = {a, ba, ababb, ε}</span> — véges;</li>
+          <li><span class="m">L₂ = {aⁱbⁱ | i ≥ 0}</span> — végtelen (ez lesz a „nem reguláris" iskolapélda);</li>
+          <li><span class="m">L₃ = {uuᴿ | u ∈ V*}</span> — páros hosszú palindrómák, végtelen;</li>
+          <li><span class="m">L₅ = {u ∈ {a,b}⁺ | u-ban ugyanannyi a, mint b}</span> — végtelen.</li>
+        </ul>
+        <p>Mivel a nyelv <strong>halmaz</strong>, minden halmazfogalom (elem, részhalmaz, unió…) értelmes rá — ez a kulcsa a következő leckének. Kapcsolódó fogalmak: <span class="clink" data-go="nyelv">Nyelv</span>, <span class="clink" data-go="vstar">V* és V⁺</span>.</p>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li><span class="m">ε ∉ ∅</span>, de <span class="m">ε ∈ {ε}</span> — az üres nyelvnek <em class="t">semmi</em> sem eleme.</li>
+          <li><span class="m">(ab)³ ≠ a³b³</span> — a hatvány a teljes szót ismétli.</li>
+          <li>A suffixeket a szó végéről olvassuk: <span class="m">ab</span> az <span class="m">abbaba</span>-nak prefixe, nem suffixe.</li>
+          <li>Két szó lehet azonos hosszú és azonos betűkészletű, mégis különböző — a sorrend számít.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-muveletek">→ 1. rész: Nyelvműveletek, szavak kérdései</a>
+        <a data-tab="resz2" href="#r2-nyelvek">→ 2. rész: Nyelvek megadása formulával</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" id="lecke-2" data-lid="l2">
+    <div class="lh"><span class="lno">2. LECKE</span><h3>Műveletek nyelveken</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel:</span><a href="#lecke-1" style="color:var(--acc)">1. lecke — Alapfogalmak</a></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> a nyelv halmaz, ezért minden halmazművelet működik rajta — de jönnek <em class="t">új</em>, szóépítésből származó műveletek is (konkatenáció, hatvány, lezárás). Az igaz/hamis rész legtöbb csapdája e műveletek apró részleteire kérdez rá (mi van ε-nal? hányféleképpen áll elő egy szó?). Aki ezt a leckét végigszámolja, annak az 1. feladatrész A) témaköre ajándék pont.</p>
+
+      <h4>Halmazműveletek nyelveken</h4>
+      <div class="def blue"><div class="h">Unió, metszet, különbség, komplemens</div><div class="body">
+        <p><span class="m">L₁∪L₂</span>, <span class="m">L₁∩L₂</span>, <span class="m">L₁−L₂</span> a szokásos halmazműveletek. Az L <strong>komplemense</strong> a V ábécére nézve: <span class="m">‾L = V* − L</span>.</p>
+        <p><strong>Példa:</strong> <span class="m">L₁={ε, ab, abb}</span>, <span class="m">L₂={ab, bab}</span> → <span class="m">L₁∪L₂ = {ε,ab,abb,bab}</span>, <span class="m">L₁∩L₂ = {ab}</span>, <span class="m">L₁−L₂ = {ε,abb}</span>.</p>
+        <p><strong>Példa komplemensre:</strong> <span class="m">V={a}</span>, <span class="m">L={a²ⁿ⁺¹ | n∈ℕ}</span> (páratlan hosszú a-sorozatok) → <span class="m">‾L = {a²ⁿ | n∈ℕ}</span> (párosak, ε-nal együtt).</p>
+        <p><strong>De Morgan</strong> nyelvekre is áll: <span class="m">L₁∩L₂ = ‾(‾L₁ ∪ ‾L₂)</span> — ezzel vezethető vissza a metszet unióra és komplemensre (a <span class="clink" data-go="zartsag">zártsági</span> bizonyításokban kell majd).</p>
+      </div></div>
+
+      <h4>Konkatenáció és hatvány nyelveken</h4>
+      <div class="def blue"><div class="h">Nyelvek konkatenációja: „mindenkit mindenkivel"</div><div class="body">
+        <p><span class="m">L₁L₂ = {u₁u₂ | u₁∈L₁, u₂∈L₂}</span> — minden L₁-beli szót minden L₂-belivel összefűzünk. Asszociatív, nem kommutatív; egységeleme <span class="m">{ε}</span>: <span class="m">{ε}L = L{ε} = L</span>.</p>
+        <p><strong>Példa szorzattáblával:</strong> <span class="m">L₁={ab, bb}</span>, <span class="m">L₂={ε, a, bba}</span>:</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th>·</th><th>ε</th><th>a</th><th>bba</th></tr>
+          <tr><td><strong>ab</strong></td><td>ab</td><td>aba</td><td>abbba</td></tr>
+          <tr><td><strong>bb</strong></td><td>bb</td><td>bba</td><td>bbbba</td></tr>
+        </table></div>
+        <p>Tehát <span class="m">L₁L₂ = {ab, bb, aba, bba, abbba, bbbba}</span> — 6 szó.</p>
+        <p><strong>De vigyázat, lehet kevesebb is!</strong> <span class="m">L₃={a, ab}</span>, <span class="m">L₄={bc, c}</span>: a négy párosítás <span class="m">a·bc=abc</span>, <span class="m">a·c=ac</span>, <span class="m">ab·bc=abbc</span>, <span class="m">ab·c=abc</span> — az <span class="m">abc</span> <em class="t">kétféleképpen</em> is előáll, így <span class="m">|L₃L₄| = 3 &lt; 2·2</span>. Halmazban minden szó egyszer számít!</p>
+      </div></div>
+      <div class="def blue"><div class="h">Nyelv hatványa</div><div class="body">
+        <p><span class="m">L⁰ := {ε}</span>, <span class="m">Lⁱ := L·Lⁱ⁻¹</span>. Tehát <span class="m">Lⁱ = {u₁u₂…uᵢ | mindegyik uⱼ ∈ L}</span> — a tényezők <strong>különböző</strong> L-beli szavak is lehetnek!</p>
+        <p><strong>Példa végigszámolva:</strong> <span class="m">L={a, bb}</span>: <span class="m">L⁰={ε}</span>, <span class="m">L¹={a,bb}</span>, <span class="m">L² = {aa, abb, bba, bbbb}</span>, <span class="m">L³ = {aaa, aabb, abba, abbbb, bbaa, bbabb, bbbba, bbbbbb}</span>.</p>
+        <p><strong>Másik klasszikus:</strong> <span class="m">{aa, aaa}²</span>: <span class="m">aa·aa=a⁴</span>, <span class="m">aa·aaa=a⁵</span>, <span class="m">aaa·aa=a⁵</span>, <span class="m">aaa·aaa=a⁶</span> → az eredmény <span class="m">{a⁴, a⁵, a⁶}</span>, csak <strong>3</strong> szó.</p>
+      </div></div>
+
+      <h4>Iteratív lezárás: L* és L⁺</h4>
+      <div class="def gold"><div class="h">Kleene-lezárt és pozitív lezárt</div><div class="body">
+        <p class="m blk">L* = ⋃ᵢ≥₀ Lⁱ        L⁺ = ⋃ᵢ≥₁ Lⁱ</p>
+        <p>Az <span class="m">L*</span> az „akárhányszor (akár 0-szor) fűzünk össze L-beli szavakat" nyelve — az <span class="m">ε</span> <strong>mindig</strong> eleme (az L⁰={ε} miatt). Az <span class="m">L⁺</span>-ból csak az i=0 tag hiányzik.</p>
+        <p><strong>A viszonyuk esetszétválasztással</strong> (ezt kérdezik a legtöbbször!):</p>
+        <ul>
+          <li>ha <span class="m">ε ∉ L</span>: <span class="m">L⁺ = L* \ {ε}</span> — ekkor a két halmaz tényleg az ε-ban tér el;</li>
+          <li>ha <span class="m">ε ∈ L</span>: <span class="m">L⁺ = L*</span> — az ε már L¹-ben megjelenik, tehát <span class="m">L*\{ε} ≠ L⁺</span>, és <span class="m">L⁺ ⊂ L*</span> sem valódi tartalmazás!</li>
+        </ul>
+        <p>Hasznos azonosságok: <span class="m">L*L* = L*</span>, <span class="m">(L*)* = L*</span> (a csillag „telítődik"), <span class="m">(L₁∪L₂)* = (L₁*L₂*)*</span>, és a konkatenáció disztributív az unióra: <span class="m">L₁(L₂∪L₃) = L₁L₂ ∪ L₁L₃</span> — de a metszetre <strong>NEM</strong>: <span class="m">L₁(L₂∩L₃) ≠ L₁L₂ ∩ L₁L₃</span> általában.</p>
+      </div></div>
+
+      <h4>Tükrözés, homomorfizmus, maradéknyelv</h4>
+      <div class="def blue"><div class="h">Nyelv tükörképe</div><div class="body">
+        <p><span class="m">Lᴿ := {uᴿ | u ∈ L}</span>. Példa: <span class="m">L={ba²ⁿ⁺¹ | n∈ℕ}</span> → <span class="m">Lᴿ = {a²ⁿ⁺¹b | n∈ℕ}</span>. Azonosságok: <span class="m">(Lᴿ)ᴿ=L</span>, <span class="m">(L₁L₂)ᴿ = L₂ᴿL₁ᴿ</span> (sorrendcsere!), <span class="m">(L*)ᴿ = (Lᴿ)*</span>.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Homomorfizmus</div><div class="body">
+        <p><span class="m">h: V₁* → V₂*</span> homomorfizmus, ha (1) minden szóhoz pontosan egy kép tartozik, és (2) <strong>fűzéstartó</strong>: <span class="m">h(uv) = h(u)h(v)</span>.</p>
+        <p>Ebből <strong>levezethető</strong>, hogy <span class="m">h(ε)=ε</span> mindig: <span class="m">h(ε) = h(εε) = h(ε)h(ε)</span>, és az egyetlen szó, ami önmagával konkatenálva önmaga, az ε. Következmény az is, hogy elég h-t a <em class="t">betűkön</em> megadni: <span class="m">h(a₁…aₙ) = h(a₁)…h(aₙ)</span>.</p>
+        <p><strong>Példa:</strong> <span class="m">h(a)=cc</span>, <span class="m">h(b)=cbb</span>, <span class="m">L = {aⁿbaⁿ | n∈ℕ}</span> → <span class="m">h(L) = {c²ⁿ⁺¹b²c²ⁿ | n∈ℕ}</span> (mert <span class="m">(cc)ⁿ·cbb·(cc)ⁿ = c²ⁿ⁺¹bbc²ⁿ</span>).</p>
+      </div></div>
+      <div class="def green"><div class="h">Maradéknyelv (L_w)</div><div class="body">
+        <p><span class="m">L_w = {v | wv ∈ L}</span> — „mi jöhet még w után, hogy L-beli szót kapjunk". Speciálisan <span class="m">L_ε = L</span>.</p>
+        <p><strong>Példa végig:</strong> <span class="m">L={a, ab, bab}</span>, <span class="m">w=a</span>: mely L-beli szavak kezdődnek a-val? <span class="m">a</span> (maradék: ε) és <span class="m">ab</span> (maradék: b). Tehát <span class="m">Lₐ = {ε, b}</span>, <span class="m">|Lₐ| = 2</span>.</p>
+        <p>Ez a fogalom később kulcsszerepet kap: a <span class="clink" data-go="myhill">Myhill–Nerode tétel</span> szerint L pontosan akkor reguláris, ha véges sok különböző maradéknyelve van (7. lecke).</p>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li><span class="m">L³ ≠ {uuu | u∈L}</span> — a három tényező különbözhet.</li>
+          <li><span class="m">L*\{ε} = L⁺</span> <strong>csak akkor</strong>, ha ε∉L. „Minden L-re" kezdetű állításnál egy ellenpélda (ε∈L) elég a HAMIS-hoz.</li>
+          <li><span class="m">|L₁L₂|</span> lehet kisebb, mint <span class="m">|L₁|·|L₂|</span> — egy szó többféleképp is előállhat.</li>
+          <li><span class="m">L{ε} = L</span>, de <span class="m">L∪{ε} ≠ L</span>, ha ε∉L — a kettő nem keverendő.</li>
+          <li><span class="m">(L₁L₂)ᴿ = L₂ᴿL₁ᴿ</span> — tükrözésnél a konkatenáció sorrendje megfordul.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-muveletek">→ 1. rész: Nyelvműveletek, szavak kérdései</a>
+        <a data-tab="resz2" href="#r2-nyelvek">→ 2. rész: Nyelvek megadása formulával</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" id="lecke-3" data-lid="l3">
+    <div class="lh"><span class="lno">3. LECKE</span><h3>Reguláris kifejezések</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel:</span><a href="#lecke-2" style="color:var(--acc)">2. lecke — Műveletek nyelveken</a></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> a reguláris kifejezés a legszűkebb nyelvosztály, a <span class="clink" data-go="regnyelv">reguláris nyelvek</span> „képletnyelve". A rekurzív definíciót a vizsgán <strong>szóról szóra</strong> kérhetik (2–3. feladatrész), az 1. részben pedig kifejezés-ekvivalenciákról kell dönteni. A motiváció: minden véges nyelv reguláris, és az L₃ osztály zárt az unióra, konkatenációra és lezárásra — a reguláris kifejezés pontosan ezekből az építőkövekből rakja össze a nyelveket.</p>
+
+      <h4>A definíció — ezt kérik szóról szóra</h4>
+      <div class="def gold"><div class="h">Reguláris kifejezés (rekurzív definíció)</div><div class="body">
+        <p>A V ábécé feletti <strong>reguláris kifejezések</strong>:</p>
+        <ul>
+          <li><span class="m">∅</span> (más jelölésben: 0) reguláris kifejezés V felett,</li>
+          <li><span class="m">ε</span> reguláris kifejezés V felett,</li>
+          <li><span class="m">a</span> reguláris kifejezés V felett, minden <span class="m">a ∈ V</span> betűre,</li>
+          <li>ha <span class="m">R</span> reguláris kifejezés, akkor <span class="m">R*</span> is az,</li>
+          <li>ha <span class="m">Q, R</span> reguláris kifejezések, akkor <span class="m">(Q·R)</span> is az,</li>
+          <li>ha <span class="m">Q, R</span> reguláris kifejezések, akkor <span class="m">(Q+R)</span> is az.</li>
+        </ul>
+        <p>Más reguláris kifejezés nincs — csak ami ezekből véges sok lépésben felépül.</p>
+      </div></div>
+      <div class="def gold"><div class="h">A kifejezés jelentése: az L(R) nyelv</div><div class="body">
+        <p>Minden R kifejezéshez tartozik egy <span class="m">L(R)</span> reguláris nyelv:</p>
+        <p class="m blk">L(∅) = ∅      L(ε) = {ε}      L(a) = {a}
+L(R*) = L(R)*      L(Q·R) = L(Q)L(R)      L(Q+R) = L(Q) ∪ L(R)</p>
+        <p>Tehát a <span class="m">*</span>, <span class="m">·</span>, <span class="m">+</span> szimbólumok rendre a <span class="clink" data-go="csillag">lezárást</span>, a <span class="clink" data-go="konkat">konkatenációt</span> és az uniót jelölik. Precedencia: <span class="m">*</span> köt a legerősebben, aztán <span class="m">·</span>, végül <span class="m">+</span> — ezért írhatunk pl. <span class="m">aa*+ba*</span>-ot zárójel nélkül. A <span class="m">Q⁺</span> a <span class="m">Q·Q*</span> rövidítése.</p>
+      </div></div>
+
+      <h4>Azonosságok és kidolgozott ekvivalenciák</h4>
+      <div class="def blue"><div class="h">Alap-azonosságok</div><div class="body">
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Azonosság</th><th>Miért igaz</th></tr>
+          <tr><td><span class="m">P·(Q+R) = PQ + PR</span></td><td>a konkatenáció disztributív az unióra</td></tr>
+          <tr><td><span class="m">P* = ε + P·P*</span></td><td>0 iteráció (ε) vagy „egy P, aztán akárhány"</td></tr>
+          <tr><td><span class="m">P* = (ε+P)*</span></td><td>az ε hozzávétele a csillag alatt semmit sem ad</td></tr>
+          <tr><td><span class="m">ε·P = P·ε = P</span></td><td>{ε} a konkatenáció egységeleme</td></tr>
+          <tr><td><span class="m">P·∅ = ∅·P = ∅</span></td><td>∅-vel konkatenálva nincs párosítható szó</td></tr>
+          <tr><td><span class="m">P** = P*</span></td><td>a csillag idempotens — a lezárt már lezárt</td></tr>
+        </table></div>
+      </div></div>
+      <div class="def blue"><div class="h">Ekvivalens vagy sem? — a vizsga kedvencei</div><div class="body">
+        <ul>
+          <li><span class="m">(ab)** = (ab)*</span> — <strong>IGEN</strong>: R**=R* minden R-re.</li>
+          <li><span class="m">(ε+ab+cd)* = (ab+cd)*</span> — <strong>IGEN</strong>: a csillag amúgy is tartalmazza az ε-t.</li>
+          <li><span class="m">(ab)* =? a*b*</span> — <strong>NEM</strong>: <span class="m">aabb ∈ a*b*</span>, de <span class="m">aabb ∉ (ab)*</span> (ott szigorúan ab-blokkok váltakoznak).</li>
+          <li><span class="m">bc(bc)* =? (bc)*</span> — <strong>NEM</strong>: a bal oldal <span class="m">(bc)⁺</span>, az ε hiányzik belőle.</li>
+          <li><span class="m">cc* =? {c²ⁿ | n≥0}</span> — <strong>NEM</strong>: <span class="m">cc* = {cᵏ | k≥1}</span>, minden pozitív hossz; a páros hosszúakat a <span class="m">(cc)*</span> írná le.</li>
+          <li><span class="m">(a+b)a* = aa* + ba*</span> — <strong>IGEN</strong> (disztributivitás); de <span class="m">(a+b)a* ≠ a + ba*</span>: az utóbbiból hiányzik pl. az <span class="m">aa</span>.</li>
+        </ul>
+      </div></div>
+      <div class="def green"><div class="h">Nyelv → reguláris kifejezés: gyakori feladatok</div><div class="body">
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Nyelv (szavakban)</th><th>Reguláris kifejezés</th></tr>
+          <tr><td>páros hosszú a-sorozatok (ε-nal)</td><td><span class="m">(aa)*</span></td></tr>
+          <tr><td>b-re végződő szavak {a,b} felett</td><td><span class="m">(a+b)*b</span></td></tr>
+          <tr><td>pontosan két a-t tartalmazó szavak</td><td><span class="m">b*ab*ab*</span></td></tr>
+          <tr><td>legalább egy a-t tartalmazó szavak</td><td><span class="m">(a+b)*a(a+b)*</span></td></tr>
+          <tr><td><span class="m">{a²ⁿ⁺¹b | n∈ℕ} ∪ {aⁿ | n∈ℕ}</span></td><td><span class="m">(aa)*ab + a*</span></td></tr>
+        </table></div>
+        <p><strong>Stratégia:</strong> bontsd a nyelvet unióra (a <span class="m">+</span> ágai), minden ágat írj le balról jobbra haladva, az ismétlődő blokkokat csillagozd.</p>
+      </div></div>
+      <div class="def green"><div class="h">Minden véges nyelv reguláris + Arden lemmája</div><div class="body">
+        <p><strong>Minden véges nyelv reguláris:</strong> ha <span class="m">L = {u₁, …, uₙ}</span>, akkor minden uᵢ felírható a betűi konkatenációjaként, az egész nyelv pedig <span class="m">u₁ + u₂ + … + uₙ</span> alakban — ez egy reguláris kifejezés. (Ezért reguláris pl. az <span class="m">{uuᴿ | |u|≤100}</span> nyelv is: véges!)</p>
+        <p><strong>Arden lemmája:</strong> az <span class="m">X = Q·X + R</span> egyenlet megoldása <span class="m">X = Q*·R</span>, és ha <span class="m">ε ∉ L(Q)</span>, ez az <em class="t">egyetlen</em> megoldás. Példa: <span class="m">X = bc*X + ab*</span> → <span class="m">X = (bc*)*ab*</span>. Erre a 7. leckében (nyelvi egyenletrendszerek, automata→reg.kif átírás) lesz nagy szükség.</p>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li>A csillag mindig behozza az ε-t: <span class="m">ε ∈ R*</span> minden R-re — ezért <span class="m">bc(bc)* ≠ (bc)*</span>.</li>
+          <li><span class="m">cc*</span> = „legalább egy c", nem „páros sok c".</li>
+          <li>A reguláris kifejezésben <strong>nincs</strong> metszet és komplemens művelet — de a leírt nyelvosztály (L₃) zárt rájuk, tehát pl. két reg. nyelv metszete is leírható egy (másik) reg. kifejezéssel.</li>
+          <li>Az ∅ is reguláris kifejezés — az üres nyelv reguláris nyelv.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-regkif">→ 1. rész: Reguláris kifejezések kérdései</a>
+        <a data-tab="resz2" href="#r2-nyelvek">→ 2. rész: Nyelvek megadása formulával</a>
+        <a data-tab="resz2" href="#r2-definiciok">→ 2. rész: Definíciók pontos kimondása</a>
+      </div>
+    </div>
+  </div>
+  <div class="lesson" id="lecke-4" data-lid="l4">
+    <div class="lh"><span class="lno">4. LECKE</span><h3>Grammatikák és a Chomsky-hierarchia</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel:</span><a href="#lecke-1" style="color:var(--acc)">1. lecke</a><a href="#lecke-2" style="color:var(--acc)">2. lecke</a></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> a grammatika a nyelvek <em class="t">generatív</em> leírása: egyetlen kezdőszimbólumból szabályokkal építünk szavakat. A Chomsky-hierarchia — a 0/1/2/3 típusok — a tárgy gerince: minden további tétel (normálformák, automaták, eldönthetőség) erre a felosztásra hivatkozik. Az 1. feladatrészben tipikus kérdés: „milyen típusú ez a grammatika?", a 3. részben pedig a definíciók pontos kimondása.</p>
+
+      <h4>A grammatika és a levezetés</h4>
+      <div class="def gold"><div class="h">Grammatika (N, Σ, P, S)</div><div class="body">
+        <p>Egy <span class="m">G = (N, Σ, P, S)</span> rendezett négyes <strong>generatív grammatika</strong>, ha:</p>
+        <ul>
+          <li><span class="m">N</span> és <span class="m">Σ</span> <strong>diszjunkt</strong>, véges ábécék (<span class="m">N∩Σ=∅</span>): N a <strong>nemterminálisok</strong> (változók), Σ a <strong>terminálisok</strong> (a kész szó betűi);</li>
+          <li><span class="m">S ∈ N</span> a <strong>kezdőszimbólum</strong>;</li>
+          <li><span class="m">P</span> véges sok <span class="m">x → y</span> <strong>szabály</strong> halmaza, ahol <span class="m">x, y ∈ (N∪Σ)*</span>, és <strong>x legalább egy nemterminálist tartalmaz</strong>.</li>
+        </ul>
+        <p><strong>Ellenpélda</strong> (vizsgakedvenc): ha a szabályok közt van <span class="m">abb → aSb</span> jellegű — a bal oldal csupa terminális —, az <strong>nem</strong> grammatika, mert a bal oldalon kell lennie N-belinek.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Levezetés: ⇒ és ⇒*</div><div class="body">
+        <p><strong>Egylépéses levezetés</strong> (<span class="m">u ⇒ v</span>): v úgy keletkezik u-ból, hogy u egy részszavát, amely egy szabály bal oldala, kicseréljük a szabály jobb oldalára. Formálisan: <span class="m">u = u₁xu₂</span>, <span class="m">v = u₁yu₂</span> és <span class="m">x→y ∈ P</span>.</p>
+        <p><strong>Többlépéses levezetés</strong> (<span class="m">u ⇒* v</span>): u = v (0 lépés!) vagy van <span class="m">u ⇒ w₁ ⇒ … ⇒ v</span> lánc. A <span class="m">⇒*</span> a <span class="m">⇒</span> reláció <strong>reflexív-tranzitív lezártja</strong> — a „reflexív" miatt <span class="m">u ⇒* u</span> mindig igaz, szabályalkalmazás nélkül is.</p>
+        <p>Az S-ből levezethető szavakat (akár nemterminálissal vegyesen) <strong>mondatformának</strong> nevezzük.</p>
+      </div></div>
+      <div class="def blue"><div class="h">A generált nyelv L(G)</div><div class="body">
+        <p class="m blk">L(G) := {w ∈ Σ* | S ⇒* w}</p>
+        <p>Csak a <strong>tisztán terminális</strong> levezetett szavak tartoznak L(G)-be — a nemterminálist tartalmazó mondatformák nem!</p>
+        <p><strong>Kidolgozott példa:</strong> <span class="m">G: S → aSb | ε</span>. Levezetés: <span class="m">S ⇒ aSb ⇒ aaSbb ⇒ aabb</span> (az utolsó lépés az S→ε szabállyal). Általában n lépés „aSb" után <span class="m">aⁿSbⁿ</span> a mondatforma, majd az ε-szabállyal <span class="m">aⁿbⁿ</span>. Tehát <span class="m">L(G) = {aⁿbⁿ | n ≥ 0}</span>.</p>
+        <p>Két grammatika <strong>ekvivalens</strong>, ha ugyanazt a nyelvet generálják; <strong>gyengén ekvivalens</strong>, ha a generált nyelvek legfeljebb az ε-ban térnek el. Egy grammatika <em class="t">egy</em> nyelvet generál, de egy nyelvhez <em class="t">sok</em> grammatika tartozhat.</p>
+      </div></div>
+
+      <h4>A Chomsky-féle osztályozás</h4>
+      <div class="def gold"><div class="h">A négy típus szabályalakjai</div><div class="body">
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Típus</th><th>Szabályalak</th><th>Elnevezés</th><th>Nyelvosztály</th><th>Automata</th></tr>
+          <tr><td><strong>0</strong></td><td>nincs korlátozás</td><td>mondatszerkezetű</td><td>rekurzívan felsorolható (L₀)</td><td>Turing-gép</td></tr>
+          <tr><td><strong>1</strong></td><td><span class="m">u₁Au₂ → u₁vu₂</span>, <span class="m">v≠ε</span> (+ KES)</td><td>környezetfüggő</td><td>L₁</td><td>lineárisan korlátolt TG</td></tr>
+          <tr><td><strong>2</strong></td><td><span class="m">A → v</span>, <span class="m">v∈(N∪Σ)*</span></td><td>környezetfüggetlen</td><td>L₂</td><td>veremautomata</td></tr>
+          <tr><td><strong>3</strong></td><td><span class="m">A → uB</span> vagy <span class="m">A → u</span>, <span class="m">u∈Σ*</span></td><td>reguláris</td><td>L₃</td><td>véges automata</td></tr>
+        </table></div>
+        <p><strong>KES (korlátozott ε-szabály):</strong> 1-típusban az egyetlen megengedett ε-szabály az <span class="m">S → ε</span>, és az is csak akkor, ha <strong>S nem fordul elő egyetlen szabály jobb oldalán sem</strong>. (2-es és 3-as típusban az <span class="m">A→v</span> illetve <span class="m">A→u</span> alakba az ε belefér, ott nincs ilyen megkötés.)</p>
+        <p>Az 1-es típus neve onnan jön, hogy az A nemterminális csak az <span class="m">u₁ … u₂</span> <em class="t">környezetben</em> írható át; a 2-esben bármely környezetben — ezért „környezetfüggetlen".</p>
+      </div></div>
+      <div class="def blue"><div class="h">Kidolgozott példa: melyik típusú?</div><div class="body">
+        <p><span class="m">P = {S → ASB, S → ε, AB → BA, BA → AB, A → a, B → b}</span>. Szabályonként:</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Szabály</th><th>Mely típusokba fér bele?</th></tr>
+          <tr><td><span class="m">S → ASB</span></td><td>0, 1*, 2</td></tr>
+          <tr><td><span class="m">S → ε</span></td><td>0, 1*, 2, 3</td></tr>
+          <tr><td><span class="m">AB → BA</span></td><td>csak 0</td></tr>
+          <tr><td><span class="m">BA → AB</span></td><td>csak 0</td></tr>
+          <tr><td><span class="m">A → a</span>, <span class="m">B → b</span></td><td>0, 1, 2, 3</td></tr>
+        </table></div>
+        <p>(*) Az <span class="m">S→ASB</span> és az <span class="m">S→ε</span> <strong>együtt</strong> megsérti a KES-t (S szerepel jobb oldalon ÉS van S→ε), tehát a kettő együtt már kizárja az 1-es típust. Az <span class="m">AB→BA</span> pedig mindent kizár a 0-son kívül (bal oldalán nem „egy A egy környezetben" áll). <strong>Eredmény: G ∈ G₀</strong>, és semelyik szűkebb osztályba nem tartozik. A grammatika típusa mindig a <em class="t">legszigorúbb</em> osztály, amibe az összes szabály belefér.</p>
+      </div></div>
+      <div class="def green"><div class="h">A hierarchia-tétel</div><div class="body">
+        <p class="m blk">L₃ ⊊ L₂ ⊊ L₁ ⊊ L₀</p>
+        <p>A tartalmazások <strong>valódiak</strong> — mindegyik szinten van olyan nyelv, ami az alatta lévőben nincs: <span class="m">{aⁿbⁿ}</span> ∈ L₂\L₃ (Kis Bar-Hillel), <span class="m">{aⁿbⁿcⁿ}</span> ∈ L₁\L₂ (Nagy Bar-Hillel), és a szóprobléma-eldönthetetlenség ad L₀\L₁ nyelvet. Vigyázat: a grammatikaosztályokra csak <span class="m">G₃⊆G₂⊆G₀</span> és <span class="m">G₁⊆G₀</span> látszik a definícióból (egy 3-as szabályú grammatika nem feltétlenül 1-es a KES miatt!) — a <em class="t">nyelv</em>osztályokra viszont a teljes lánc igaz.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Lineáris és jobblineáris grammatikák</div><div class="body">
+        <p>Egy CF grammatika <strong>lineáris</strong>, ha minden szabálya <span class="m">A → u</span> vagy <span class="m">A → u₁Bu₂</span> alakú (<span class="m">u, u₁, u₂ ∈ Σ*</span>) — a jobb oldalon <strong>legfeljebb egy</strong> nemterminális van. <strong>Ballineáris</strong>: a B a bal szélen (<span class="m">A→Bu</span>); <strong>jobblineáris</strong>: a B a jobb szélen (<span class="m">A→uB</span>) — ez utóbbi épp a 3-típusú (reguláris) grammatika másik neve.</p>
+        <ul>
+          <li><span class="m">S → aSb | ε</span> — lineáris, de se nem bal-, se nem jobblineáris;</li>
+          <li><span class="m">S → Saa | b</span> — ballineáris;</li>
+          <li><span class="m">S → aS | bbS | c</span> — jobblineáris.</li>
+        </ul>
+        <p><strong>Tétel:</strong> minden ballineáris grammatika is <em class="t">reguláris nyelvet</em> generál (a szabályok „megfordításával" jobblineárissá alakítható). De a <strong>lineáris</strong> osztály már bővebb: az <span class="m">{aⁿbⁿ}</span> lineáris grammatikával generálható, reguláris grammatikával nem!</p>
+      </div></div>
+
+      <h4>Aktív és elérhető nemterminálisok, redukált grammatika</h4>
+      <div class="def gold"><div class="h">Aktív vs. elérhető — két független fogalom</div><div class="body">
+        <p><span class="m">Y ∈ N</span> <strong>aktív</strong>, ha levezethető belőle terminális szó: <span class="m">Y ⇒* w</span> valamely <span class="m">w ∈ Σ*</span>-ra. <span class="m">Y</span> <strong>elérhető</strong>, ha a kezdőszimbólumból elérhető: <span class="m">S ⇒* v₁Yv₂</span>. <strong>Hasznos</strong> = aktív ÉS elérhető; a grammatika <strong>redukált</strong>, ha minden nemterminálisa hasznos.</p>
+        <p>A két tulajdonság <strong>független</strong>: egy N lehet aktív, de elérhetetlen; és lehet elérhető, de inaktív. Mindkettő <em class="t">iteratívan</em> számolható:</p>
+        <p class="m blk">Aktívak:   A₁ = {X | X→u∈P, u∈Σ*},   Aᵢ₊₁ = Aᵢ ∪ {X | X→w∈P, w∈(Σ∪Aᵢ)*}
+Elérhetők: R₁ = {S},   Rᵢ₊₁ = Rᵢ ∪ {Y | X→uYw∈P, X∈Rᵢ}</p>
+        <p>Mindkét sorozat hízik, amíg meg nem áll — a fixpont a keresett halmaz.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Kidolgozott példa: redukálás</div><div class="body">
+        <p class="m blk">S → A | bBD
+A → AB | AC
+B → ε | a | SS
+C → AS | aba
+D → BB</p>
+        <p><strong>Aktívak:</strong> <span class="m">A₁={B,C}</span> (B→ε/a és C→aba közvetlen terminális), <span class="m">A₂={B,C,D}</span> (D→BB már csupa aktív), <span class="m">A₃={B,C,D,S}</span> (S→bBD), <span class="m">A₄=A₃</span> — fixpont. Az <strong>A inaktív</strong> (A→AB|AC mindkét szabálya A-t tartalmaz, sosem szabadul tőle), így A és minden A-t tartalmazó szabály törlendő:</p>
+        <p class="m blk">S → bBD     B → ε | a | SS     C → aba     D → BB</p>
+        <p><strong>Elérhetők</strong> innen: <span class="m">R₁={S}</span>, <span class="m">R₂={S,B,D}</span>, <span class="m">R₃=R₂</span>. A <strong>C nem elérhető</strong> → törlendő. Az eredmény redukált és ekvivalens az eredetivel.</p>
+        <p><strong>A sorrend kötött:</strong> először az inaktívakat, utána a nem elérhetőket kell elhagyni! Fordított sorrendben hibás eredményt kaphatunk (az inaktívak törlése után válhat valami elérhetetlenné).</p>
+      </div></div>
+
+      <h4>Levezetési fa</h4>
+      <div class="def blue"><div class="h">Levezetési fa (CF grammatikákhoz)</div><div class="body">
+        <p>A levezetés fa-alakú ábrázolása: a gyökér <span class="m">S</span>; ha egy X csúcs gyerekei balról jobbra <span class="m">X₁,…,Xₘ</span>, akkor <span class="m">X→X₁…Xₘ ∈ P</span>; a levelek <span class="m">Σ∪{ε}</span>-beliek. A fa <strong>határa</strong> a levelek balról jobbra olvasva — ez a levezetett szó.</p>
+        <p><strong>Példa:</strong> <span class="m">S → aSb | ε</span>, a szó <span class="m">aabb</span>:</p>
+        <p class="m blk">        S
+      / | \
+     a  S  b
+      / | \
+     a  S  b
+        |
+        ε</p>
+        <p>Határ: <span class="m">a·a·ε·b·b = aabb</span>. Egy szóhoz <em class="t">több</em> levezetés is tartozhat (más sorrendben írjuk át a nemterminálisokat), de azonos fa — ha viszont egy szóhoz <em class="t">két különböző fa</em> tartozik, a grammatika <strong>nem egyértelmű</strong>. Chomsky normálformában (5. lecke) minden belső csúcsnak 1 vagy 2 gyereke van — a fa lényegében <strong>bináris</strong>.</p>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li>A KES-t két szabály <strong>együtt</strong> is megsértheti (S→ε + S a jobb oldalon) — szabályonként nézve mindkettő „1-es típusúnak látszik".</li>
+          <li>Aktív és elérhető <strong>független</strong> — egyikből sem következik a másik.</li>
+          <li>Redukálásnál a sorrend: <strong>előbb inaktív, utána elérhetetlen</strong>.</li>
+          <li><span class="m">L(G)</span>-be csak terminális szavak tartoznak — a mondatforma nem eleme a nyelvnek.</li>
+          <li><span class="m">u ⇒* u</span> mindig igaz (0 lépés) — a ⇒* reflexív.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-gramm">→ 1. rész: Grammatikák, típusok kérdései</a>
+        <a data-tab="resz1" href="#r1-aktiv">→ 1. rész: Aktív / elérhető kérdései</a>
+        <a data-tab="resz2" href="#r2-definiciok">→ 2. rész: Definíciók</a>
+        <a data-tab="resz3" href="#r3-alapdef">→ 3. rész: Alapdefiníciók</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" id="lecke-5" data-lid="l5">
+    <div class="lh"><span class="lno">5. LECKE</span><h3>Mentesítések és normálformák</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel:</span><a href="#lecke-4" style="color:var(--acc)">4. lecke — Grammatikák</a></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> a normálforma kötött szabályalak, amely <em class="t">ugyanazt a nyelvet</em> generálja — kell az algoritmusokhoz (a CYK csak Chomsky NF-en fut), a bizonyításokhoz (bináris levezetési fa), és önmagában is visszatérő kifejtős vizsgakérdés. Az átalakító lépéseket (ε-mentesítés, láncmentesítés, hosszredukció) <strong>végig kell tudni számolni</strong> — a 2. feladatrészben konkrét grammatikán kérik.</p>
+
+      <h4>3-as (reguláris) normálforma</h4>
+      <div class="def gold"><div class="h">3-as normálforma és a hosszredukció</div><div class="body">
+        <p><strong>Definíció</strong> (a kérdésbank szerint): G 3-as normálformájú, ha minden szabálya <span class="m">A → aB</span> vagy <span class="m">A → a</span> alakú (<span class="m">A,B∈N, a∈Σ</span>). Minden reguláris nyelv generálható 3-as NF grammatikával.</p>
+        <div class="note"><b>⚠ Jelölési eltérés:</b> az előadásdiák egy változatban <span class="m">X→aY, X→ε</span> alakkal definiálják a 3-as NF-et. A kérdésbank ✓-os állításai az <span class="m">A→aB, A→a</span> változatot használják — vizsgán ezt érdemes írni, de ne lepődj meg, ha a diákon a másikat látod.</div>
+        <p><strong>Hosszredukció</strong> — a hosszú jobb oldalak feldarabolása új nemterminálisokkal:</p>
+        <ul>
+          <li><span class="m">A → a₁a₂…aₙB</span> helyett: <span class="m">A→a₁Z₁, Z₁→a₂Z₂, …, Zₙ₋₁→aₙB</span>;</li>
+          <li><span class="m">A → a₁…aₘ</span> helyett: <span class="m">A→a₁Y₁, …, Yₘ₋₁→aₘE, E→ε</span> (E közös ε-nemterminális lehet).</li>
+        </ul>
+        <p><strong>Kidolgozott példa</strong> (előadásról): <span class="m">S→abS | B,&nbsp; B→bB | V,&nbsp; V→aa | b</span>. Hosszredukció után:</p>
+        <p class="m blk">S → aZ₁    Z₁ → bS    S → B
+B → bB     B → V
+V → aZ₂    Z₂ → aE    V → bE    E → ε</p>
+        <p>Maradtak <span class="m">S→B</span>, <span class="m">B→V</span> <strong>láncszabályok</strong> — ezeket a láncmentesítés tünteti el (lásd lent): <span class="m">H(S)={S,B,V}</span>, <span class="m">H(B)={B,V}</span>, így S és B megkapja V (és B) nem-lánc szabályait: <span class="m">S→bB|aZ₂|bE</span>, <span class="m">B→aZ₂|bE</span>, a láncszabályok törlődnek.</p>
+      </div></div>
+
+      <h4>Az átalakító lépések (CF grammatikákra)</h4>
+      <div class="def blue"><div class="h">ε-mentesítés — végigszámolva</div><div class="body">
+        <p><strong>1. lépés:</strong> határozd meg az <span class="m">U = {X | X ⇒* ε}</span> halmazt iterálva: <span class="m">U₁ = {X | X→ε ∈ P}</span>, <span class="m">Uᵢ₊₁ = Uᵢ ∪ {X | X→u ∈ P, u ∈ Uᵢ*}</span> (azaz a jobb oldal csupa „eltüntethető" jelből áll).</p>
+        <p><strong>2. lépés:</strong> hagyd el az ε-szabályokat, és minden szabályból vedd fel az összes olyan változatot, ahol U-beli jobboldali nemterminálisokat elhagysz (de a teljes jobb oldal nem tűnhet el).</p>
+        <p><strong>3. lépés:</strong> ha <span class="m">S ∈ U</span> (azaz ε ∈ L(G)): ha S nem szerepel jobb oldalon, csak vedd fel az <span class="m">S→ε</span>-t; ha szerepel, új <span class="m">S′</span> kezdőszimbólum kell <span class="m">S′→S | ε</span> szabályokkal (KES!).</p>
+        <p><strong>Kidolgozott példa:</strong> <span class="m">S→AB,&nbsp; A→aA | ε,&nbsp; B→bB | ε</span>.</p>
+        <p class="m blk">U₁ = {A, B}   (közvetlen ε-szabályok)
+U₂ = {A, B, S}   (S→AB és A,B ∈ U₁)
+U₃ = U₂ = U</p>
+        <p>Új szabályok: <span class="m">S→AB</span>-ből <span class="m">S→AB | A | B</span>; <span class="m">A→aA</span>-ból <span class="m">A→aA | a</span>; <span class="m">B→bB</span>-ből <span class="m">B→bB | b</span>. Mivel <span class="m">S∈U</span> és S nincs jobb oldalon: <span class="m">S→ε</span> felvehető. Végeredmény:</p>
+        <p class="m blk">S → AB | A | B | ε
+A → aA | a
+B → bB | b</p>
+      </div></div>
+      <div class="def blue"><div class="h">Láncmentesítés — végigszámolva</div><div class="body">
+        <p>A <span class="m">A → B</span> alakú <strong>láncszabályokat</strong> tünteti el. Minden A-ra a láncon elérhető nemterminálisok: <span class="m">H₀(A) = {A}</span>, <span class="m">Hᵢ₊₁(A) = Hᵢ(A) ∪ {B | C→B ∈ P, C ∈ Hᵢ(A)}</span>, fixpontig. Az új szabályrendszer: <strong>A megkapja minden H(A)-beli nemterminális nem-lánc szabályát</strong>, a láncszabályok törlődnek.</p>
+        <p><strong>Példa:</strong> <span class="m">S→B | aS,&nbsp; B→V | bB,&nbsp; V→a</span>: <span class="m">H(S): {S} → {S,B} → {S,B,V}</span> (fixpont), <span class="m">H(B)={B,V}</span>, <span class="m">H(V)={V}</span>. Új szabályok: <span class="m">S → aS | bB | a</span>, <span class="m">B → bB | a</span>, <span class="m">V → a</span> (V nem elérhető többé — redukálással törölhető).</p>
+      </div></div>
+
+      <h4>Chomsky normálforma</h4>
+      <div class="def gold"><div class="h">Chomsky NF — definíció és a 4 lépés</div><div class="body">
+        <p><strong>Definíció:</strong> G Chomsky normálformájú, ha minden szabálya az alábbiak egyike:</p>
+        <ul>
+          <li><span class="m">A → BC</span> (<span class="m">A,B,C ∈ N</span>) — és ha <span class="m">S→ε ∈ P</span>, akkor <span class="m">B,C ≠ S</span>;</li>
+          <li><span class="m">A → a</span> (<span class="m">a ∈ Σ</span>);</li>
+          <li><span class="m">S → ε</span>.</li>
+        </ul>
+        <p><strong>Tétel:</strong> minden környezetfüggetlen grammatikához létezik vele ekvivalens Chomsky NF grammatika. Az algoritmus (a sorrend kötött!):</p>
+        <ul>
+          <li><strong>1. Álterminálisok:</strong> minden a terminálishoz új <span class="m">ā</span> nemterminális és <span class="m">ā→a</span> szabály; a hosszabb jobb oldalakon a→ā csere.</li>
+          <li><strong>2. Hosszredukció:</strong> <span class="m">X→Y₁…Yₖ</span> (k≥3) feldarabolása: <span class="m">X→Y₁Z₁, Z₁→Y₂Z₂, …, Zₖ₋₂→Yₖ₋₁Yₖ</span>.</li>
+          <li><strong>3. ε-mentesítés</strong> (a fenti U-s módszerrel).</li>
+          <li><strong>4. Láncmentesítés</strong> (a fenti H-s módszerrel).</li>
+        </ul>
+        <p><strong>Példa</strong> (előadásról, tömörítve): <span class="m">S→AB, A→aAa|C, B→bBb|C, C→Cabc|b|ε</span>. Az 1–2. lépés után pl. <span class="m">A→DZ₁, Z₁→AD, D→a</span>; a 3. lépésben <span class="m">U={C,A,B,S}</span> adódik (C→ε közvetlenül, A→C, B→C, S→AB láncon át), és mivel S nincs jobb oldalon, <span class="m">S→ε</span> felvehető; a 4. lépés után minden szabály <span class="m">A→BC</span> / <span class="m">A→a</span> / <span class="m">S→ε</span> alakú. A teljes levezetést érdemes egyszer kézzel végigszámolni!</p>
+      </div></div>
+
+      <h4>Hossznemcsökkentő grammatikák és a Kuroda normálforma</h4>
+      <div class="def blue"><div class="h">Hossznemcsökkentő grammatika</div><div class="body">
+        <p>G <strong>hossznemcsökkentő</strong>, ha minden szabálya <span class="m">u → v</span>, <span class="m">|u| ≤ |v|</span> alakú (u,v nemüres) — kivétel a KES-es <span class="m">S→ε</span>. <strong>Tétel:</strong> a hossznemcsökkentő grammatikák pontosan a környezetfüggő nyelveket generálják (L₁) — tehát a két grammatikaosztály <em class="t">nyelvosztály szinten</em> azonos, de egy konkrét hossznemcsökkentő grammatika nem feltétlenül környezetfüggő alakú.</p>
+        <p><strong>Klasszikus példa:</strong> <span class="m">S→abc | aSBc,&nbsp; cB→Bc,&nbsp; bB→bb</span> hossznemcsökkentő, és <span class="m">L = {aⁿbⁿcⁿ | n≥1}</span>-t generálja — ezzel látjuk be, hogy <span class="m">L₂ ⊊ L₁</span> (ez a nyelv a Nagy Bar-Hillel lemma szerint nem CF).</p>
+      </div></div>
+      <div class="def gold"><div class="h">Kuroda normálforma — a helyes definíció</div><div class="body">
+        <p>G <strong>Kuroda normálformájú</strong>, ha minden szabálya az alábbiak egyike (<span class="m">A,B,C ∈ N</span>, <span class="m">a ∈ Σ</span>):</p>
+        <p class="m blk">A → a      A → BC      AB → AC      BA → CA      (+ S → ε a KES szerint)</p>
+        <p>A kontextus-szabályoknál figyeld meg: <strong>az egyik betű megmarad</strong> (A balról vagy jobbról), csak a másik cserélődik. Az általános <span class="m">AB → CD</span> — ahol mindkét betű változik — <strong>NEM</strong> Kuroda-szabály; az átalakításnál egy W segéd-nemterminálissal szimuláljuk: <span class="m">AB→AW, AW→CW, CW→CD</span>.</p>
+        <p><strong>Tétel:</strong> minden környezetfüggő grammatikához létezik ekvivalens Kuroda NF grammatika. (Lépései: álterminálisok → CF-szabályok hosszredukciója → láncmentesítés → környezetfüggő szabályok hosszredukciója → AB→CD elimináció.)</p>
+        <div class="note"><b>⚠ Kulcshiba-figyelmeztetés:</b> az oldal korábbi változata (és sok jegyzet) az <span class="m">AB→CD</span> alakot nevezte Kuroda-szabálynak. A kurzus előadásanyaga és a kérdésbank szerint a Kuroda NF a <strong>fenti, egyoldali</strong> alakokat engedi — a vizsgán ezt kell tudni. A kérdésbank trükkje: a felsorolásba odacsempészett <span class="m">A→ε</span> teszi hamissá az állítást, nem az AB→AC!</div>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li>ε-szabály normálformában: <strong>csak</strong> <span class="m">S→ε</span> megengedett (Chomsky és Kuroda NF-ben is) — tetszőleges <span class="m">A→ε</span> kizárt.</li>
+          <li>Chomsky NF-ben ha <span class="m">S→ε∈P</span>, akkor S nem állhat <span class="m">A→BC</span> jobb oldalán.</li>
+          <li>„Minden hossznemcsökkentő grammatika Kuroda NF-ű" — HAMIS: ekvivalens Kurodává <em class="t">alakítható</em>, de nem automatikusan az.</li>
+          <li>Az ε-mentesítésnél az U halmazba <strong>láncon át</strong> is be lehet kerülni (S→AB, A,B∈U ⟹ S∈U).</li>
+          <li>A ChNF-algoritmus lépéseinek sorrendje kötött: álterminál → hosszredukció → ε-mentesítés → láncmentesítés.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-gramm">→ 1. rész: Normálformák kérdései</a>
+        <a data-tab="resz2" href="#r2-konstrukciok">→ 2. rész: Kis konstrukciók</a>
+        <a data-tab="resz3" href="#r3-normalformak">→ 3. rész: Normálformák és tételeik</a>
+      </div>
+    </div>
+  </div>
+  <div class="lesson" id="lecke-6" data-lid="l6">
+    <div class="lh"><span class="lno">6. LECKE</span><h3>Automaták: véges automaták és veremautomaták</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel:</span><a href="#lecke-3" style="color:var(--acc)">3. lecke</a><a href="#lecke-4" style="color:var(--acc)">4. lecke</a></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> a grammatika <em class="t">generál</em>, az automata <em class="t">felismer</em>: bemenete egy szó, kimenete igen/nem. Minden Chomsky-szinthez tartozik egy gépmodell — a reguláris nyelvekhez a véges automata, a környezetfüggetlenekhez a veremautomata. Az 1. feladatrész E) és F) témaköre, a 2. rész konstrukciós feladatai (determinizálás, veremautomata-szabályok) és több kifejtős definíció is innen jön.</p>
+
+      <h4>Determinisztikus véges automata (DVA)</h4>
+      <div class="def gold"><div class="h">DVA — definíció</div><div class="body">
+        <p>Egy <strong>determinisztikus véges automata</strong> rendezett ötös: <span class="m">A = (Q, Σ, δ, q₀, F)</span>, ahol</p>
+        <ul>
+          <li><span class="m">Q</span> — az állapotok véges, nemüres halmaza,</li>
+          <li><span class="m">Σ</span> — az inputábécé,</li>
+          <li><span class="m">δ: Q×Σ → Q</span> — az átmenetfüggvény, a <strong>teljes</strong> Q×Σ-n értelmezve (minden állapot-betű párra <em class="t">pontosan egy</em> következő állapot),</li>
+          <li><span class="m">q₀ ∈ Q</span> — a kezdőállapot (egyetlen!),</li>
+          <li><span class="m">F ⊆ Q</span> — az elfogadó (vég)állapotok halmaza.</li>
+        </ul>
+        <p>A δ kiterjesztése szavakra: <span class="m">δ(q,ε)=q</span>, <span class="m">δ(q,xa)=δ(δ(q,x),a)</span>. Az elfogadott nyelv: <span class="m">L(A) = {u | δ(q₀,u) ∈ F}</span>.</p>
+        <p><strong>Kidolgozott példa</strong> (paritás-automata): <span class="m">Q={q₀,q₁,q₂,q₃}</span>, <span class="m">F={q₁,q₂}</span>; q₀ = „eddig páros a, páros b", q₁ = „páros a, páratlan b", q₂ = „páratlan a, páros b", q₃ = „mindkettő páratlan":</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th></th><th>a</th><th>b</th></tr>
+          <tr><td><strong>→ q₀</strong></td><td>q₂</td><td>q₁</td></tr>
+          <tr><td><strong>← q₁</strong></td><td>q₃</td><td>q₀</td></tr>
+          <tr><td><strong>← q₂</strong></td><td>q₀</td><td>q₃</td></tr>
+          <tr><td><strong>q₃</strong></td><td>q₁</td><td>q₂</td></tr>
+        </table></div>
+        <p>Számolás: <span class="m">δ(q₀, aab) = δ(δ(δ(q₀,a),a),b) = δ(δ(q₂,a),b) = δ(q₀,b) = q₁ ∈ F</span> → az <span class="m">aab</span>-t elfogadja. Az automata pontosan azokat a szavakat fogadja el, ahol az a-k és b-k paritása különbözik.</p>
+      </div></div>
+
+      <h4>Nemdeterminisztikus véges automata (NDVA)</h4>
+      <div class="def gold"><div class="h">NDVA — definíció és az elfogadás</div><div class="body">
+        <p><span class="m">A = (Q, Σ, δ, Q₀, F)</span>, ahol <span class="m">δ: Q×Σ → P(Q)</span> (egy lépésből <strong>több vagy nulla</strong> folytatás is lehet, <span class="m">δ(q,a)=∅</span> esetén a gép <em class="t">elakad</em>), és <span class="m">Q₀ ⊆ Q</span> — <strong>több kezdőállapot</strong> is megengedett.</p>
+        <p>Az átmenetek szabályként is írhatók: <span class="m">qa → p ⟺ p ∈ δ(q,a)</span>. Egy <span class="m">u ∈ QΣ*</span> szó az automata <strong>konfigurációja</strong> (aktuális állapot + hátralévő input), és <span class="m">qaw ⇒ pw</span>, ha <span class="m">qa→p</span> szabály. Az elfogadott nyelv:</p>
+        <p class="m blk">L(A) = {u ∈ Σ* | q₀u ⇒* p valamely q₀∈Q₀, p∈F}</p>
+        <p><strong>Elég EGY elfogadó futás!</strong> Ugyanarra az inputra lehet elutasító és elakadó számítás is — ha létezik legalább egy, ami a teljes szót feldolgozva F-beli állapotban áll meg, a szó eleme L(A)-nak. További tudnivalók: <span class="m">ε ∈ L(A) ⟺ Q₀∩F ≠ ∅</span>; a DVA az NDVA speciális esete (<span class="m">|δ(q,a)|=1</span> mindenütt és egy kezdőállapot).</p>
+      </div></div>
+      <div class="def blue"><div class="h">Determinizálás (hatványhalmaz-konstrukció) — végigszámolva</div><div class="body">
+        <p>Minden NDVA-hoz van vele ekvivalens DVA: az új állapotok a régi állapothalmaz <strong>részhalmazai</strong>:</p>
+        <p class="m blk">Q′ = P(Q)     q₀′ = Q₀     F′ = {q′ | q′ ∩ F ≠ ∅}     δ′(q′,a) = ⋃_{q∈q′} δ(q,a)</p>
+        <p>Egy részhalmaz akkor elfogadó, ha <strong>tartalmaz</strong> F-beli állapotot. <strong>Példa</strong> (előadásról): NDVA <span class="m">Q₀={q₀,q₁}</span>, <span class="m">F={q₁,q₂}</span>, átmenetek: <span class="m">δ(q₀,a)={}, δ(q₀,b)={q₁,q₂}, δ(q₁,a)={q₀}, δ(q₁,b)={}, δ(q₂,a)={q₁}, δ(q₂,b)={q₂}</span>. A determinizált automata (a kezdőállapotból elérhető rész):</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th>állapot</th><th>a</th><th>b</th><th>elfogadó?</th></tr>
+          <tr><td><strong>→ {q₀,q₁}</strong></td><td>{q₀}</td><td>{q₁,q₂}</td><td>igen (q₁∈F)</td></tr>
+          <tr><td>{q₀}</td><td>{}</td><td>{q₁,q₂}</td><td>nem</td></tr>
+          <tr><td>{q₁,q₂}</td><td>{q₀,q₁}</td><td>{q₂}</td><td>igen</td></tr>
+          <tr><td>{q₂}</td><td>{q₁}</td><td>{q₂}</td><td>igen</td></tr>
+          <tr><td>{q₁}</td><td>{q₀}</td><td>{}</td><td>igen</td></tr>
+          <tr><td>{}</td><td>{}</td><td>{}</td><td>nem (csapda-állapot)</td></tr>
+        </table></div>
+        <p>Számolás-minta: <span class="m">δ′({q₁,q₂}, a) = δ(q₁,a) ∪ δ(q₂,a) = {q₀} ∪ {q₁} = {q₀,q₁}</span>. Az üres halmaz a „csapda": belőle nincs kiút, és nem elfogadó.</p>
+      </div></div>
+      <div class="def blue"><div class="h">Összefüggő automata</div><div class="body">
+        <p>Egy DVA <strong>összefüggő</strong>, ha <strong>minden</strong> állapota elérhető a kezdőállapotból (van olyan u szó, hogy δ(q₀,u) = q). Nem elég, ha csak az elfogadó állapotok érhetők el! A nem elérhető állapotok az átmeneteikkel együtt elhagyhatók — a felismert nyelv nem változik. Ez a minimalizálás első lépése (a második az ekvivalens állapotok összevonása — lásd 7. lecke, Myhill–Nerode).</p>
+      </div></div>
+
+      <h4>Veremautomata (VA)</h4>
+      <div class="def gold"><div class="h">Veremautomata — definíció</div><div class="body">
+        <p>A veremautomata rendezett <strong>hetes</strong>: <span class="m">A = (Z, Q, Σ, δ, z₀, q₀, F)</span>, ahol</p>
+        <ul>
+          <li><span class="m">Z</span> — veremábécé, <span class="m">z₀ ∈ Z</span> — kezdő veremszimbólum (a verem nem indul üresen!),</li>
+          <li><span class="m">Q, Σ, q₀, F</span> — mint a véges automatánál,</li>
+          <li><span class="m">δ: Z×Q×(Σ∪{ε}) → P_véges(Z*×Q)</span> — az átmeneti függvény.</li>
+        </ul>
+        <p>Egy lépésben a gép a verem <strong>tetején lévő 1 szimbólumot</strong> egy <span class="m">w ∈ Z*</span> szóra cseréli, állapotot vált, és (betű-lépésnél) beolvassa az inputbetűt; <strong>ε-lépésnél</strong> input olvasása nélkül dolgozik. <strong>Konfiguráció:</strong> <span class="m">zqw</span> alakú szó — z a verem tartalma (utolsó betűje a verem teteje), q az állapot, w a hátralévő input.</p>
+        <p><strong>A verem méretváltozása</strong> egy lépésben (sok igaz/hamis erre megy rá): a z tetőszimbólum helyére w kerül, a nettó változás <span class="m">|w|−1</span>:</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Csere</th><th>Művelet</th><th>Méretváltozás</th></tr>
+          <tr><td><span class="m">z → ε</span></td><td>POP</td><td>−1</td></tr>
+          <tr><td><span class="m">z → z</span></td><td>változatlan verem</td><td>0</td></tr>
+          <tr><td><span class="m">z → z′</span></td><td>csere a tetőn</td><td>0</td></tr>
+          <tr><td><span class="m">z → zz′</span></td><td>PUSH</td><td>+1</td></tr>
+          <tr><td><span class="m">z → zz′z″</span></td><td>két PUSH egyben</td><td>+2</td></tr>
+        </table></div>
+      </div></div>
+      <div class="def gold"><div class="h">Determinisztikus veremautomata — a pontos feltétel</div><div class="body">
+        <p class="m blk">A determinisztikus  ⟺  minden (z,q,a) ∈ Z×Q×Σ esetén |δ(z,q,a)| + |δ(z,q,ε)| = 1</p>
+        <p><strong>Miért így?</strong> A betű-lépések és az ε-lépés <em class="t">együtt</em> versenyeznek: ha egy (z,q) párnál van ε-átmenet ÉS betű-átmenet is, a gép választhatna — az már nemdeterminizmus. Tehát minden (z,q)-ra: <em class="t">vagy</em> minden a betűre pontosan egy betű-átmenet van és ε-átmenet nincs, <em class="t">vagy</em> pontosan egy ε-átmenet van és betű-átmenet nincs.</p>
+        <div class="note"><b>⚠ Kulcshiba a kérdésbankban:</b> az az állítás, hogy „ha minden (z,q,a)-ra <span class="m">|δ(z,q,a)| = 1</span>, akkor determinisztikus" — <strong>hamis</strong>, mert nem zárja ki az ε-átmeneteket: ha emellett <span class="m">δ(z,q,ε) ≠ ∅</span> is fennáll, az összeg 1-nél nagyobb, a gép nemdeterminisztikus. A helyes feltétel a fenti összeg-alak.</div>
+        <p><strong>Erőviszonyok:</strong> <span class="m">L₃ ⊊ L_detVA ⊊ L_VA = L₂</span>. Példák a valódiságra: <span class="m">{wcwᴿ}</span> felismerhető determinisztikus VA-val (a c jelzi, mikor kell fordulni), de nem reguláris; <span class="m">{wwᴿ}</span> (jel nélküli palindróma) felismerhető VA-val, de determinisztikussal <strong>nem</strong> — a gép nem tudhatja, hol a közép, „tippelnie" kell (ε-átmenettel nemdeterminisztikusan vált át gyűjtésről ellenőrzésre).</p>
+      </div></div>
+      <div class="def blue"><div class="h">Elfogadás: L(A) végállapottal vs. N(A) üres veremmel</div><div class="body">
+        <p class="m blk">L(A) = {w | z₀q₀w ⇒* up, u∈Z*, p∈F}        N(A) = {w | z₀q₀w ⇒* p, p∈Q}</p>
+        <p><strong>L(A):</strong> a teljes input feldolgozása után <em class="t">elfogadó állapotban</em> áll (a verem tartalma mindegy). <strong>N(A):</strong> a teljes input feldolgozása után a <em class="t">verem kiürül</em> (az állapot mindegy — F irreleváns).</p>
+        <p><strong>Tétel (ekvivalencia):</strong> bármely A-hoz van A′, hogy <span class="m">N(A′) = L(A)</span>, és bármely A-hoz van A″, hogy <span class="m">L(A″) = N(A)</span> — a két elfogadási mód ugyanazt a nyelvosztályt (a CF nyelveket) adja. A konstrukciók kulcsa egy új <span class="m">z₀′</span> „padló-szimbólum", ami megvédi a vermet az idő előtti kiürüléstől.</p>
+        <p><strong>Példa</strong> (üres veremmel, <span class="m">N(A) = {aⁿbⁿ | n≥1}</span>): szabályok: <span class="m">$q₀a → $aq₀</span>, <span class="m">aq₀a → aaq₀</span> (a-k gyűjtése), <span class="m">aq₀b → q₁</span>, <span class="m">aq₁b → q₁</span> (b-nként egy POP), <span class="m">$q₁ → q₁</span> (padló eltakarítása). Futás az <span class="m">aabbb</span>-re: <span class="m">$q₀aabbb ⇒ $aq₀abbb ⇒ $aaq₀bbb ⇒ $aq₁bb ⇒ $q₁b ⇒ q₁b</span> — a verem üres lett, <strong>de maradt input</strong> (b), ezért a szó NINCS elfogadva. Az elfogadáshoz a teljes input feldolgozása is kell!</p>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li>DVA-nál a δ a <strong>teljes</strong> Q×Σ-n értelmezett és egyértékű; NDVA-nál <span class="m">δ(q,a)=∅</span> is lehet (elakadás).</li>
+          <li>NDVA-nál <strong>egy</strong> elfogadó futás elég — az elutasító futások nem számítanak.</li>
+          <li>Determinizálásnál egy részhalmaz akkor elfogadó, ha <strong>metszi</strong> F-et (nem kell részhalmaza legyen!).</li>
+          <li>A verem egy lépésben a <strong>tetejét</strong> cseréli: <span class="m">z→z′</span> esetén a méret NEM változik.</li>
+          <li>A determinizmus feltétele az <strong>összeg</strong>: <span class="m">|δ(z,q,a)|+|δ(z,q,ε)|=1</span>.</li>
+          <li>Üres verem + maradék input = <strong>elutasítás</strong>.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-vegesaut">→ 1. rész: Véges automaták kérdései</a>
+        <a data-tab="resz1" href="#r1-verem">→ 1. rész: Veremautomaták kérdései</a>
+        <a data-tab="resz2" href="#r2-konstrukciok">→ 2. rész: Kis konstrukciók</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" id="lecke-7" data-lid="l7">
+    <div class="lh"><span class="lno">7. LECKE</span><h3>Tételek és algoritmusok</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel:</span><a href="#lecke-5" style="color:var(--acc)">5. lecke</a><a href="#lecke-6" style="color:var(--acc)">6. lecke</a></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> ez a lecke köti össze az összes eddigi eszközt: tételek arról, hogy <em class="t">mi mivel ekvivalens</em> (Kleene, Myhill–Nerode), algoritmusok arról, hogy <em class="t">mit hogyan döntünk el</em> (CYK, üresség, végtelenség), és lemmák arról, hogy <em class="t">mi nem fér bele</em> egy osztályba (Bar-Hillel). A 3. feladatrész kifejtős kérdéseinek nagy része innen jön — a kimondásokat pontosan kell tudni.</p>
+
+      <h4>Kleene tétele és az eszközök ekvivalenciája</h4>
+      <div class="def gold"><div class="h">Kleene-tétel</div><div class="body">
+        <p>Egy nyelv pontosan akkor írható le <strong>reguláris kifejezéssel</strong>, ha felismerhető <strong>(nem)determinisztikus véges automatával</strong> — és ezek pontosan a 3-típusú grammatikával generálható (reguláris) nyelvek. Öt eszköz, egyetlen nyelvosztály:</p>
+        <p class="m blk">3-típusú grammatika ⟺ 3NF grammatika ⟺ reguláris kifejezés ⟺ NDVA ⟺ DVA</p>
+        <p>Az átjárások mind konstruktívak: 3NF-re hozás; automata↔grammatika (<span class="m">qa→p ⟷ q→ap</span> szabálymegfeleltetés); NDVA→DVA determinizálás; automata→reg.kif. nyelvi egyenletrendszerrel; reg.kif.→grammatika a zártsági konstrukciókkal.</p>
+      </div></div>
+
+      <h4>Maradéknyelvek: Myhill–Nerode tétel és minimális automata</h4>
+      <div class="def gold"><div class="h">Myhill–Nerode tétel</div><div class="body">
+        <p class="m blk">L reguláris  ⟺  {L_p | p ∈ Σ*} véges halmaz
+(azaz L-nek véges sok páronként különböző maradéknyelve van)</p>
+        <p><strong>A konstrukció (⇐):</strong> ha véges sok a maradéknyelv, automatát építünk belőlük: az állapotok maguk a maradéknyelvek, <span class="m">δ(L_p, t) = L_pt</span>, kezdőállapot <span class="m">L_ε = L</span>, elfogadó az <span class="m">L_p</span>, ha <span class="m">ε ∈ L_p</span> (azaz p ∈ L). Ez az <strong>A^MN maradéknyelv-automata</strong>, és ez az L <strong>minimális</strong> determinisztikus automatája — kevesebb állapotú DVA nem létezhet L-hez.</p>
+        <p><strong>1. példa — nem-regularitás bizonyítása:</strong> <span class="m">L = {aⁿbⁿ}</span>. A maradéknyelvek: <span class="m">L_{aᵏ} = {aⁿ⁻ᵏbⁿ | n≥k}</span>, és <span class="m">bⁱ ∈ L_{aᵏ} ⟺ i=k</span> — tehát <span class="m">L_a, L_{aa}, L_{aaa}, …</span> mind <strong>páronként különböző</strong>: végtelen sok maradéknyelv van, L nem reguláris.</p>
+        <p><strong>2. példa — minimális automata:</strong> <span class="m">L = {w | N_a(w) és N_b(w) páros}</span>. Bármely u-ra L_u csak az a-k és b-k paritásától függ → pontosan <strong>4</strong> maradéknyelv van (<span class="m">L_ε, L_a, L_b, L_ab</span>) → L reguláris, és a minimális automatája 4 állapotú (a 6. lecke paritás-automatája!).</p>
+      </div></div>
+      <div class="def blue"><div class="h">Nyelvi egyenletrendszer (Arden) — automata → reguláris kifejezés</div><div class="body">
+        <p>Az automata minden q állapotához tartozik az <span class="m">L(A,q) = {v | δ(q,v) ∈ F}</span> maradéknyelv (mi visz q-ból végállapotba). Ezekre felírható az egyenletrendszer:</p>
+        <p class="m blk">L(A,q) = ⋃_{t∈Σ} t·L(A, δ(q,t))  ∪  ({ε} ha q∈F, különben ∅)</p>
+        <p>és <span class="m">L(A) = L(A,q₀)</span>. A megoldás <strong>Arden lemmájával</strong> (<span class="m">X = QX + R ⟹ X = Q*R</span>, egyértelmű ha ε∉L(Q)) — Gauss-eliminációs stílusban: az utolsó ismeretlent kifejezzük, visszahelyettesítjük, és így tovább.</p>
+        <p><strong>Kidolgozott példa</strong> (előadásról): <span class="m">X = aY+bZ+cV</span>, <span class="m">Y = bZ</span>, <span class="m">Z = aX+cV</span>, <span class="m">V = bV+ε</span>. Megoldás alulról: <span class="m">V = b*</span> (Arden); <span class="m">Z = aX + cb*</span>; <span class="m">Y = b(aX + cb*)</span>; behelyettesítve X-be: <span class="m">X = (aba + ba)X + (abc + bc + c)b*</span>, amiből Arden szerint <span class="m">X = (aba+ba)*(abc+bc+c)b*</span>.</p>
+      </div></div>
+
+      <h4>CYK algoritmus — a CF szóprobléma köbös időben</h4>
+      <div class="def gold"><div class="h">CYK — szabály és teljes kidolgozott példa</div><div class="body">
+        <p><strong>Input:</strong> Chomsky NF grammatika + a <span class="m">u = t₁…tₙ</span> szó. A <span class="m">H_{i,j}</span> halmaz = azok a nemterminálisok, amelyekből a <span class="m">tᵢ…tⱼ</span> részszó levezethető:</p>
+        <p class="m blk">H_{i,i} = {A | A→tᵢ ∈ P}
+H_{i,j} = {A | A→YZ ∈ P, Y∈H_{i,h}, Z∈H_{h+1,j} valamely i≤h&lt;j-re}</p>
+        <p>azaz a <span class="m">tᵢ…tⱼ</span> részszót minden lehetséges helyen kettévágjuk, és megnézzük, mely szabályok rakják össze a két felet. <strong>Az eredmény:</strong> <span class="m">u ∈ L(G) ⟺ S ∈ H_{1,n}</span> — NEM elég, hogy H₁ₙ nemüres! Műveletigény: <span class="m">O(|G|·n³)</span> (köbös).</p>
+        <p><strong>Teljes példa</strong> (előadásról): <span class="m">P: S→AB|BC, A→XA|a, X→a, C→YC|c, Y→c, B→UV|VW|XS, U→XX, W→YY|XS, V→ZZ, Z→b</span>, a szó: <span class="m">aabbcc</span>. A mátrix (felül az 1 hosszú részszavak, lefelé egyre hosszabbak):</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th>hossz↓</th><th>a</th><th>a</th><th>b</th><th>b</th><th>c</th><th>c</th></tr>
+          <tr><td>1</td><td>{A,X}</td><td>{A,X}</td><td>{Z}</td><td>{Z}</td><td>{Y,C}</td><td>{Y,C}</td></tr>
+          <tr><td>2</td><td>{A,U}</td><td>{}</td><td>{V}</td><td>{}</td><td>{C,W}</td><td></td></tr>
+          <tr><td>3</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td></td><td></td></tr>
+          <tr><td>4</td><td>{B}</td><td>{}</td><td>{B}</td><td></td><td></td><td></td></tr>
+          <tr><td>5</td><td>{S}</td><td>{S}</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>6</td><td><strong>{S,B,W}</strong></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </table></div>
+        <p>Egy cella kiszámítása, pl. <span class="m">H_{1,2}</span> (az „aa" részszó): <span class="m">H_{1,1}·H_{2,2} = {AA, AX, XA, XX}</span> — ebből szabály jobb oldala az XA (A→XA) és az XX (U→XX), tehát <span class="m">H_{1,2} = {A,U}</span>. A végén <span class="m">S ∈ H_{1,6} = {S,B,W}</span>, tehát <span class="m">aabbcc ∈ L(G)</span>. ✓</p>
+      </div></div>
+
+      <h4>A pumpáló lemmák — nem-tartozás bizonyítása</h4>
+      <div class="def gold"><div class="h">Kis Bar-Hillel lemma (reguláris nyelvekre)</div><div class="body">
+        <p><strong>Kimondás:</strong> minden <span class="m">L ∈ L₃</span> nyelvhez van olyan <span class="m">n ∈ ℕ</span> konstans, hogy minden <span class="m">w ∈ L</span> szóra és annak minden <span class="m">w = u·w′·v</span> felbontására, ahol <span class="m">|w′| ≥ n</span>: a w′-nek van olyan <span class="m">w′ = xyz</span> felbontása, hogy <span class="m">0 &lt; |y| ≤ n</span>, és <strong>minden</strong> <span class="m">i ≥ 0</span>-ra <span class="m">u·x·yⁱ·z·v ∈ L</span>.</p>
+        <p><em class="t">Honnan jön n?</em> Az L-et felismerő DVA állapotszáma: n hosszú úton a skatulyaelv szerint ismétlődik állapot, és az ismétlődés közti y rész tetszőlegesen pumpálható (kihagyható is — i=0!).</p>
+        <p><strong>Alkalmazás lépésről lépésre</strong> (a palindrómák nyelve nem reguláris): tegyük fel indirekt, hogy <span class="m">L = {u | u=uᴿ}</span> reguláris, n a lemma konstansa. Válasszuk: <span class="m">w = aⁿbaⁿ ∈ L</span>, felbontás: <span class="m">u=ε, w′=aⁿ, v=baⁿ</span>. A lemma szerint <span class="m">w′ = xyz</span>, ahol <span class="m">y = aᵏ</span> (0&lt;k≤n) pumpálható. Az i=0 iterációval: <span class="m">aⁿ⁻ᵏbaⁿ ∈ L</span> kellene — de ez nem palindróma (k&gt;0). Ellentmondás → L nem reguláris. ∎</p>
+      </div></div>
+      <div class="def gold"><div class="h">Nagy Bar-Hillel lemma (környezetfüggetlen nyelvekre)</div><div class="body">
+        <p><strong>Kimondás:</strong> minden <span class="m">L ∈ L₂</span> nyelvhez megadható két konstans, <span class="m">p</span> és <span class="m">q</span>, hogy minden p-nél hosszabb <span class="m">w ∈ L</span> szó felírható <span class="m">w = u·x·w′·y·z</span> alakban, ahol <span class="m">|x·w′·y| ≤ q</span>, <span class="m">xy ≠ ε</span>, és <strong>minden</strong> <span class="m">i ≥ 0</span>-ra <span class="m">u·xⁱ·w′·yⁱ·z ∈ L</span> — itt <strong>két rész pumpálódik egyszerre</strong> (szinkronban!).</p>
+        <p><em class="t">Honnan jön?</em> A ChNF levezetési fa bináris; hosszú szónál a leghosszabb úton ismétlődik egy A nemterminális, és az <span class="m">A ⇒* xAy</span> rész ismételhető. A konstansok <strong>csak a nyelvtől függnek</strong>, a szótól nem.</p>
+        <p><strong>Alkalmazás lépésről lépésre</strong> (<span class="m">{aⁿbⁿcⁿ | n∈ℕ} ∉ L₂</span>): indirekt, legyen p, q a lemma szerint, és <span class="m">w = aᵏbᵏcᵏ</span>, ahol <span class="m">k &gt; max{p,q}</span>. A lemma ad egy <span class="m">w = uxw′yz</span> felbontást, <span class="m">|xw′y| ≤ q &lt; k</span> és <span class="m">xy ≠ ε</span>. Mivel az xw′y blokk q-nál rövidebb, <strong>nem érhet el mindhárom betűt</strong> (az a-k és c-k tömbje is k hosszú) — tehát az xy legalább egy betűfajtát nem tartalmaz. Az i=0 iterációnál (<span class="m">uw′z</span>) a kihagyott betűkből ugyanannyi marad (k), a többiből kevesebb — az arány felborul, a szó nincs L-ben. Ellentmondás. ∎</p>
+        <div class="note"><b>⚠ Mire jók a pumpáló lemmák?</b> KIZÁRÓLAG annak bizonyítására, hogy egy nyelv <strong>NEM</strong> tartozik az osztályba (a lemma az osztályhoz tartozás <em class="t">szükséges</em>, de nem elégséges feltétele). Az a kulcs-állítás, hogy a lemmával <em class="t">tartozást</em> lehet igazolni — HAMIS.</div>
+      </div></div>
+
+      <h4>Zártsági tulajdonságok</h4>
+      <div class="def blue"><div class="h">Mi zárt mire — a nagy táblázat</div><div class="body">
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Művelet</th><th>L₃ (reguláris)</th><th>L₂ (CF)</th><th>L₁ (CS)</th></tr>
+          <tr><td>unió, konkatenáció, lezárás (*)</td><td class="y">zárt</td><td class="y">zárt</td><td class="y">zárt</td></tr>
+          <tr><td>tükrözés</td><td class="y">zárt</td><td class="y">zárt</td><td class="y">zárt</td></tr>
+          <tr><td>metszet</td><td class="y">zárt</td><td class="n">NEM zárt</td><td class="y">zárt</td></tr>
+          <tr><td>komplemens, különbség</td><td class="y">zárt</td><td class="n">NEM zárt</td><td class="y">zárt</td></tr>
+          <tr><td>metszet reguláris nyelvvel</td><td class="y">zárt</td><td class="y">zárt</td><td class="y">zárt</td></tr>
+        </table></div>
+        <p><strong>Miért nem zárt L₂ a metszetre?</strong> <span class="m">{aᵏbⁿcⁿ} ∩ {aⁿbⁿcᵏ} = {aⁿbⁿcⁿ}</span> — a két metszendő nyelv CF (pl. <span class="m">S→aS|A, A→bAc|ε</span>), a metszet nem. A komplemensre se: De Morgan szerint a komplemens-zártságból (az unió-zártsággal együtt) következne a metszet-zártság.</p>
+        <p><strong>De:</strong> CF ∩ reguláris = CF — a veremautomata és a DVA <strong>szorzatautomatája</strong> (a VA állapota mellé „odacsatoljuk" a DVA állapotát) felismeri a metszetet.</p>
+      </div></div>
+
+      <h4>Eldönthetőség</h4>
+      <div class="def blue"><div class="h">Szóprobléma és más döntési kérdések</div><div class="body">
+        <p><strong>Szóprobléma</strong> (<span class="m">u ∈? L(G)</span>): <strong>eldönthető az 1, 2, 3 típusra</strong> — a 3-asra lineáris időben, a 2-esre polinom (köbös) időben a CYK-val, az 1-esre a hossznemcsökkentés miatt (a levezetésben a mondatformák nem nőnek |u| fölé, így véges sok lehetőség van). A <strong>0-típusra eldönthetetlen</strong> (a megállási probléma kódolható bele).</p>
+        <div class="note"><b>⚠ Kulcshiba a kérdésbankban:</b> az „i-típusú szóprobléma eldönthető i=0,2-re" állítás hibás — a helyes válasz: <strong>1, 2, 3</strong>-ra eldönthető, a 0-ra nem.</div>
+        <p><strong>CF nyelvekre eldönthető még:</strong> üresség (<span class="m">L(G)=∅?</span> — van-e legfeljebb p hosszú szó), végtelenség (van-e szó p és p+q hossz között — mindkettő a Nagy Bar-Hillel konstansaival). <strong>Eldönthetetlen viszont CF grammatikákra:</strong> <span class="m">L(G₁)=L(G₂)?</span>, <span class="m">L(G₁)⊆L(G₂)?</span>, <span class="m">L(G₁)∩L(G₂)=∅?</span>, <span class="m">L(G)=Σ*?</span>, és hogy G egyértelmű-e.</p>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li>CYK-nál a döntés: <span class="m">S ∈ H₁ₙ</span> — az, hogy H₁ₙ ≠ ∅, kevés!</li>
+          <li>A pumpáló lemmák csak <strong>nem-tartozást</strong> bizonyítanak.</li>
+          <li>A Nagy Bar-Hillelnél <strong>két rész pumpálódik együtt</strong>, és p, q csak a nyelvtől függ.</li>
+          <li>Myhill–Nerode-nál a maradéknyelvek <strong>száma</strong> a kérdés — egy maradéknyelv maga lehet végtelen nyelv!</li>
+          <li>L₂ nem zárt metszetre/komplemensre, de <strong>reguláris nyelvvel vett metszetre</strong> igen.</li>
+          <li>Két CF grammatika ekvivalenciája <strong>eldönthetetlen</strong> — pedig a szóprobléma eldönthető.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-zartsag">→ 1. rész: Zártság, döntésproblémák</a>
+        <a data-tab="resz1" href="#r1-fak">→ 1. rész: Fák, CYK, Bar-Hillel</a>
+        <a data-tab="resz3" href="#r3-algoritmus">→ 3. rész: Algoritmus és maradéknyelvek</a>
+        <a data-tab="resz3" href="#r3-pumpalo">→ 3. rész: Pumpáló lemmák</a>
+        <a data-tab="resz3" href="#r3-zartsag">→ 3. rész: Zártsági konstrukciók</a>
+      </div>
+    </div>
+  </div>
+  <!-- LECKÉK IDE -->
+</section>
+
 <section class="part active" id="attekintes">
+  <div id="dash"></div>
   <div class="part-head">
     <div class="no">Hogyan használd</div>
     <h2>A vizsga felépítése</h2>
-    <p class="lead">A vizsga <strong>60 pontos</strong> és három feladatrészből áll. Ez az oldal mindhárom részhez megtanítja a teljes kérdésbankot. Kapcsold be fent a <strong>Gyakorló módot</strong>: ekkor az Igaz/Hamis állítások válaszai elrejtődnek, és magadat tesztelheted — kattints a „Válasz” gombra, ha látni akarod a megoldást és a magyarázatot.</p>
+    <p class="lead">A vizsga <strong>60 pontos</strong> és három feladatrészből áll. Ez az oldal mindhárom részhez megtanítja a teljes kérdésbankot. Az Igaz/Hamis kérdéseknél <strong>tippelhetsz</strong> — az oldal azonnal megmondja, eltaláltad-e —, a többi kártyánál pedig magadat értékelheted (Tudtam / Részben / Nem tudtam). Ha inkább olvasva tanulnál, kapcsold be fent a <strong>Tanulós módot</strong>: ekkor minden válasz és magyarázat egyből látszik. A haladásod a nevedhez kötve mentődik, telefonon is folytathatod.</p>
   </div>
 
   <div class="def blue"><div class="h">1. rész — Igaz vagy Hamis <span class="pts">20 × 1 = 20 pont</span></div>
@@ -225,11 +965,11 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
 <section class="part" id="resz1">
   <div class="part-head"><div class="no">1. feladatrész · 20×1 pont</div>
     <h2>Igaz vagy Hamis?</h2>
-    <p class="lead">Az összes állítás a kérdésbankból, témánként csoportosítva. Minden válasznál ott a <strong>miért</strong>. Gyakorló módban a válaszok rejtve vannak.</p>
+    <p class="lead">Az összes állítás a kérdésbankból, témánként csoportosítva. Tippelj az <strong>Igaz/Hamis</strong> gombokkal — azonnal kiderül, eltaláltad-e, és minden válasznál ott a <strong>miért</strong>. A tippjeid mentődnek; Tanulós módban a válaszok egyből látszanak.</p>
   </div>
   <p class="counter">≈ 60 egyedi állítás · 6 téma</p>
 
-  <div class="topic"><span>A) Nyelvműveletek, szavak</span><span class="ix">union · konkatenáció · csillag · maradéknyelv</span></div>
+  <div class="topic" id="r1-muveletek"><span>A) Nyelvműveletek, szavak</span><span class="ix">union · konkatenáció · csillag · maradéknyelv</span></div>
   <div class="cbar" data-c="vstar,csillag,konkat,hatvany,maradek,prefszuf,unio"></div>
 
   <div class="tf" data-answer="H"><p class="stmt">Minden <span class="m">L</span> nyelvre <span class="m">L* \ {ε} = L⁺</span>.</p>
@@ -292,7 +1032,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <p>A maradéknyelv: <span class="m">Lₐ = {w | aw ∈ L}</span>. Az <span class="m">a·w∈L</span> szavak: <span class="m">a</span> (⟹ <span class="m">w=ε</span>), <span class="m">ab</span> (⟹ <span class="m">w=b</span>). Tehát <span class="m">Lₐ={ε, b}</span>, vagyis <span class="m">|Lₐ|=2</span>.</p></div>
   </div>
 
-  <div class="topic"><span>B) Reguláris kifejezések és nyelvek</span><span class="ix">R** · csillag · ekvivalencia</span></div>
+  <div class="topic" id="r1-regkif"><span>B) Reguláris kifejezések és nyelvek</span><span class="ix">R** · csillag · ekvivalencia</span></div>
   <div class="cbar" data-c="regkif,regnyelv,regmuv,csillag,kleene,maradek,myhill"></div>
 
   <div class="tf" data-answer="I"><p class="stmt">Az <span class="m">(ab)**</span> és az <span class="m">(ab)*</span> reguláris kifejezések ugyanazt a nyelvet írják le.</p>
@@ -360,7 +1100,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <div class="ans"><span class="badge i">IGAZ</span>
     <p><strong>Myhill–Nerode-tétel</strong>: <span class="m">L</span> pontosan akkor reguláris, ha véges sok különböző maradéknyelve van. A maradéknyelvek lesznek a minimális DVA állapotai.</p></div>
   </div>
-  <div class="topic"><span>C) Grammatikák, típusok és normálformák</span><span class="ix">3-as NF · Chomsky NF · Kuroda · lineáris</span></div>
+  <div class="topic" id="r1-gramm"><span>C) Grammatikák, típusok és normálformák</span><span class="ix">3-as NF · Chomsky NF · Kuroda · lineáris</span></div>
   <div class="cbar" data-c="gramm,hierarchia,linearis,cf,cs,normalforma,chomskynf,kuroda,hosszred"></div>
 
   <div class="tf" data-answer="H"><p class="stmt">Minden lineáris grammatika által generált nyelv leírható reguláris kifejezéssel.</p>
@@ -438,7 +1178,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
   <div class="tf" data-answer="H"><p class="stmt">Ha <span class="m">G</span> minden szabálya <span class="m">A→BC, AB→AC, BA→CA, A→a, A→ε</span> alakú, akkor <span class="m">G</span> Kuroda normálformájú.</p>
     <button class="reveal">Válasz</button>
     <div class="ans"><span class="badge h">HAMIS</span>
-    <p>A Kuroda NF megengedett szabályai: <span class="m">A→BC</span>, <span class="m">AB→CD</span>, <span class="m">A→a</span> (és <span class="m">S→ε</span>). Az <span class="m">AB→AC</span> / <span class="m">BA→CA</span> alak (context-sensitive, de nem a Kuroda-féle <span class="m">AB→CD</span>) <strong>nem</strong> Kuroda-szabály, és az általános <span class="m">A→ε</span> sem.</p></div>
+    <p>Majdnem jó, de az <span class="m">A→ε</span> rontja el! A Kuroda NF megengedett szabályai (az előadás definíciója szerint): <span class="m">A→BC</span>, <span class="m">AB→AC</span>, <span class="m">BA→CA</span>, <span class="m">A→a</span> — ε-szabályból pedig <strong>csak</strong> az <span class="m">S→ε</span> megengedett (és akkor S nem állhat szabály jobb oldalán). Tetszőleges <span class="m">A→ε</span> már nem is lenne hossznemcsökkentő.</p></div>
   </div>
 
   <div class="tf" data-answer="I"><p class="stmt">Ha <span class="m">G</span> minden szabálya <span class="m">A→BC</span> vagy <span class="m">A→a</span> alakú, akkor <span class="m">G</span> Chomsky normálformájú.</p>
@@ -450,7 +1190,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
   <div class="tf" data-answer="H"><p class="stmt">Minden hossznemcsökkentő grammatika Kuroda normálformájú is egyben.</p>
     <button class="reveal">Válasz</button>
     <div class="ans"><span class="badge h">HAMIS</span>
-    <p>A két osztály <strong>ugyanazt a nyelvosztályt</strong> (CSL) generálja, de egy konkrét hossznemcsökkentő grammatika nem feltétlenül Kuroda-alakú — pl. <span class="m">ABC→ABD</span> hossznemcsökkentő, de nem Kuroda-szabály. Át kell alakítani.</p></div>
+    <p>A két osztály <strong>ugyanazt a nyelvosztályt</strong> (CSL) generálja, de egy konkrét hossznemcsökkentő grammatika nem feltétlenül Kuroda-alakú — pl. az <span class="m">ABC→ABD</span> vagy az <span class="m">AB→CD</span> szabály hossznemcsökkentő, de egyik sem Kuroda-szabály. Át kell alakítani (ez mindig lehetséges).</p></div>
   </div>
 
   <div class="tf" data-answer="H"><p class="stmt">Minden hossznemcsökkentő grammatika környezetfüggő nyelvet generál. <em class="t">(állítás: a hossznemcsökkentő grammatikák hosszredukciója…)</em></p>
@@ -512,7 +1252,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <div class="ans"><span class="badge i">IGAZ</span>
     <p>Ez a nyelv valójában <strong>reguláris</strong> (egy 2 állapotú DVA számolja a <span class="m">b</span>-k paritását), márpedig minden reguláris nyelv egyben környezetfüggetlen is. Tehát igaz.</p></div>
   </div>
-  <div class="topic"><span>D) Aktív / elérhető nemterminálisok</span><span class="ix">aktív ≠ elérhető</span></div>
+  <div class="topic" id="r1-aktiv"><span>D) Aktív / elérhető nemterminálisok</span><span class="ix">aktív ≠ elérhető</span></div>
   <div class="cbar" data-c="aktiv,levez,fa,nyelvgen,gramm"></div>
 
   <div class="tf" data-answer="I"><p class="stmt">A környezetfüggetlen grammatikák inaktív nemterminálisaiból nem vezethető le terminális szó.</p>
@@ -557,7 +1297,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <p>A levezetési fa belső (nem-levél) csúcsai a szabályok bal oldalai, azok pedig CF grammatikában nemterminálisok. A levelek terminálisok vagy <span class="m">ε</span>.</p></div>
   </div>
 
-  <div class="topic"><span>E) Véges automaták (összefüggőség, ekvivalencia)</span><span class="ix">összefüggő · megkülönböztethetetlen</span></div>
+  <div class="topic" id="r1-vegesaut"><span>E) Véges automaták (összefüggőség, ekvivalencia)</span><span class="ix">összefüggő · megkülönböztethetetlen</span></div>
   <div class="cbar" data-c="dfa,nfa,osszefuggo,minimal,determinizalas,nyelvi,maradek"></div>
 
   <div class="tf" data-answer="I"><p class="stmt">Ha a DVA minden <span class="m">q,q'</span> állapotára <span class="m">q'</span> elérhető <span class="m">q</span>-ból, akkor <span class="m">A</span> összefüggő.</p>
@@ -596,7 +1336,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <p>Ugyanaz a nyelvi egyenlet. <span class="m">r∉F</span> ⟹ nincs <span class="m">{ε}</span> tag. Az <span class="m">a</span>-él visszamegy <span class="m">r</span>-be, a <span class="m">b</span>-él <span class="m">s</span>-be.</p></div>
   </div>
 
-  <div class="topic"><span>F) Veremautomaták</span><span class="ix">verem-méret · determinizmus · ekvivalencia</span></div>
+  <div class="topic" id="r1-verem"><span>F) Veremautomaták</span><span class="ix">verem-méret · determinizmus · ekvivalencia</span></div>
   <div class="cbar" data-c="va,detva,elfogad,konfig,cf,chomskynf,kuroda"></div>
 
   <div class="tf" data-answer="I"><p class="stmt">Tetszőleges <span class="m">A</span> NFA-hoz van olyan <span class="m">A'</span> veremautomata, amelyre <span class="m">N(A')=L(A)</span>. (N = üres veremmel elfogad)</p>
@@ -689,7 +1429,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <div class="ans"><span class="badge h">HAMIS</span>
     <p>Ugyanaz az ok: a determinisztikus veremautomaták nem ismernek fel minden CF nyelvet, így általában nincs ilyen <span class="m">A'</span>.</p></div>
   </div>
-  <div class="topic"><span>G) Zártsági tulajdonságok, hierarchia, döntésproblémák</span><span class="ix">L₂ nem zárt metszetre/komplemensre</span></div>
+  <div class="topic" id="r1-zartsag"><span>G) Zártsági tulajdonságok, hierarchia, döntésproblémák</span><span class="ix">L₂ nem zárt metszetre/komplemensre</span></div>
   <div class="cbar" data-c="zartsag,cf,regnyelv,cs,szoproblema,detva,hierarchia"></div>
 
   <div class="tf" data-answer="H"><p class="stmt">A környezetfüggetlen nyelvek osztálya zárt a komplemens műveletre nézve.</p>
@@ -740,7 +1480,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <p>A determinisztikus veremautomaták nyelvosztálya (<span class="m">LdetVA</span>) szigorúan a reguláris és a teljes CF közé esik: <span class="m">L₃ ⊊ LdetVA ⊊ L₂</span>.</p></div>
   </div>
 
-  <div class="topic"><span>H) Levezetési fák, CYK, Bar-Hillel lemmák</span><span class="ix">csak Chomsky NF → bináris fa</span></div>
+  <div class="topic" id="r1-fak"><span>H) Levezetési fák, CYK, Bar-Hillel lemmák</span><span class="ix">csak Chomsky NF → bináris fa</span></div>
   <div class="cbar" data-c="fa,chomskynf,cyk,bhkis,nagybh,szoproblema"></div>
 
   <div class="tf" data-answer="H"><p class="stmt">Legyen <span class="m">G</span> tetszőleges CF grammatika. Ekkor az <span class="m">L(G)</span>-beli szavak levezetési fáiban minden csúcsnak 0, 1 vagy 2 gyereke van.</p>
@@ -817,7 +1557,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <p class="lead">Indoklás nem kell — de a <strong>pontos jelölés</strong> számít. Az összes előforduló feladattípus, kék címkével a témakör. A „Miért?” sor segít, hogy értsd is.</p>
   </div>
 
-  <div class="topic"><span>Nyelvek megadása formulával</span></div>
+  <div class="topic" id="r2-nyelvek"><span>Nyelvek megadása formulával</span></div>
   <div class="cbar" data-c="regkif,csillag,konkat,hatvany,vstar"></div>
 
   <div class="qa"><p class="q"><span class="tag">reg.kif → nyelv</span>Adja meg formulával az <span class="m">a*b*</span> reguláris kifejezés által leírt nyelvet!</p>
@@ -845,7 +1585,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <p class="why"><span class="lbl">Miért</span>Tetszőleges előtag, egy garantált <span class="m">1</span>, tetszőleges utótag. Az <span class="m">(0+1)*</span> bármilyen szót (akár üreset) jelöl a két oldalon.</p>
   </div>
 
-  <div class="topic"><span>Definíciók pontos kimondása</span></div>
+  <div class="topic" id="r2-definiciok"><span>Definíciók pontos kimondása</span></div>
   <div class="cbar" data-c="regmuv,levez,nfa,va,detva,cs,zartsag"></div>
 
   <div class="qa"><p class="q"><span class="tag">reguláris műveletek</span>Mely nyelvműveleteket nevezzük reguláris műveleteknek?</p>
@@ -882,7 +1622,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <div class="a"><span class="lbl">Válasz</span>Ha <span class="m">S</span> nem fordul elő <span class="m">P</span> egyetlen szabályának jobb oldalán sem.</div>
     <p class="why"><span class="lbl">Miért</span>Csak a kezdőszimbólum kaphat <span class="m">ε</span>-szabályt, és csak akkor, ha „izolált” (nem hivatkozik rá más szabály) — különben rövidíthetnénk egy szóköző hosszúságot is, sértve a hossznemcsökkentő tulajdonságot.</p>
   </div>
-  <div class="topic"><span>Kis konstrukciók</span></div>
+  <div class="topic" id="r2-konstrukciok"><span>Kis konstrukciók</span></div>
   <div class="cbar" data-c="determinizalas,maradek,minimal,cyk,konfig,lancm,epsm,konkat"></div>
 
   <div class="qa"><p class="q"><span class="tag">FNA→DVA</span><span class="m">A=({p,q,r,s}, Σ, δ, {p,r}, {p,q})</span> (tehát <span class="m">F={p,q}</span>). Sorolja fel a hatványhalmaz-konstrukcióval kapott <span class="m">A'</span> DVA <span class="m">Q'\F'</span>-beli (nem-elfogadó) állapotait!</p>
@@ -982,7 +1722,7 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
     <p class="lead">Teljes, szóról szóra megtanulható sablonok minden előforduló nagy kérdésre: definíciók, normálforma-tételek, eljárások és lemmák.</p>
   </div>
 
-  <div class="topic"><span>Alapdefiníciók</span></div>
+  <div class="topic" id="r3-alapdef"><span>Alapdefiníciók</span></div>
   <div class="cbar" data-c="hatvany,regkif,nfa,va,cs,fa"></div>
 
   <div class="def blue"><div class="h">Nyelv természetes szám kitevős hatványai <span class="pts">3 pont</span></div>
@@ -1067,7 +1807,7 @@ L(Q+R) = L(Q) ∪ L(R)</p>
       <p><strong>Határ:</strong> a levelek címkéi balról jobbra összefűzve (konkatenálva).</p>
     </div>
   </div>
-  <div class="topic"><span>Normálformák és tételeik</span></div>
+  <div class="topic" id="r3-normalformak"><span>Normálformák és tételeik</span></div>
   <div class="cbar" data-c="chomskynf,hosszred,normalforma,linearis,kuroda"></div>
 
   <div class="def green"><div class="h">Chomsky normálforma + normálforma-tétel <span class="pts">5 pont</span></div>
@@ -1100,7 +1840,7 @@ L(Q+R) = L(Q) ∪ L(R)</p>
     </div>
   </div>
 
-  <div class="topic"><span>Zártsági konstrukciók</span></div>
+  <div class="topic" id="r3-zartsag"><span>Zártsági konstrukciók</span></div>
   <div class="cbar" data-c="csillag,konkat,cf,zartsag"></div>
 
   <div class="def red"><div class="h">L(G)* generáló 2-típusú grammatika <span class="pts">3 pont</span></div>
@@ -1111,7 +1851,7 @@ L(Q+R) = L(Q) ∪ L(R)</p>
     </div>
   </div>
 
-  <div class="topic"><span>Algoritmus és maradéknyelvek</span></div>
+  <div class="topic" id="r3-algoritmus"><span>Algoritmus és maradéknyelvek</span></div>
   <div class="cbar" data-c="cyk,chomskynf,maradek,nyelvi,dfa"></div>
 
   <div class="def gold"><div class="h">CYK-algoritmus + műveletigény <span class="pts">7 pont</span></div>
@@ -1140,7 +1880,7 @@ Hᵢⱼ := { A | A → BC ∈ P,  és  ∃ h (i≤h&lt;j):
     </div>
   </div>
 
-  <div class="topic"><span>Pumpáló (Bar-Hillel) lemmák</span></div>
+  <div class="topic" id="r3-pumpalo"><span>Pumpáló (Bar-Hillel) lemmák</span></div>
   <div class="cbar" data-c="bhkis,nagybh,regnyelv,cf,szoproblema"></div>
 
   <div class="def green"><div class="h">Kis Bar-Hillel lemma (reguláris) <span class="pts">tétel</span></div>
@@ -1181,13 +1921,14 @@ Hᵢⱼ := { A | A → BC ∈ P,  és  ∃ h (i≤h&lt;j):
     <tr><th>Normálforma</th><th>Megengedett szabályok</th><th>Mihez</th></tr>
     <tr><td>3-as NF</td><td><span class="m">A→aB</span>, &nbsp;<span class="m">A→a</span></td><td>reguláris</td></tr>
     <tr><td>Chomsky NF</td><td><span class="m">A→BC</span>, &nbsp;<span class="m">A→a</span>, &nbsp;<span class="m">S→ε</span></td><td>környezetfüggetlen</td></tr>
-    <tr><td>Kuroda NF</td><td><span class="m">A→BC</span>, &nbsp;<span class="m">AB→CD</span>, &nbsp;<span class="m">A→a</span>, &nbsp;<span class="m">S→ε</span></td><td>környezetfüggő</td></tr>
+    <tr><td>Kuroda NF</td><td><span class="m">A→BC</span>, &nbsp;<span class="m">AB→AC</span>, &nbsp;<span class="m">BA→CA</span>, &nbsp;<span class="m">A→a</span>, &nbsp;<span class="m">S→ε</span></td><td>környezetfüggő</td></tr>
   </table>
   <div class="callout"><h4>Tipikus csapdák a normálformáknál</h4>
     <ul>
       <li>Az <span class="m">A→ε</span> a 3-as NF-ben és Chomsky NF-ben (kivéve <span class="m">S→ε</span>) <strong>nem</strong> megengedett.</li>
       <li>Chomsky NF-nél, ha <span class="m">S→ε∈P</span>, akkor <span class="m">S</span> nem állhat egy <span class="m">A→BC</span> jobb oldalán.</li>
-      <li>Kuroda <span class="m">AB→CD</span> — NEM <span class="m">AB→AC</span> (utóbbi sima környezetfüggő, de nem Kuroda).</li>
+      <li>Kuroda-szabályban a kontextus <strong>megmarad az egyik oldalon</strong>: <span class="m">AB→AC</span> vagy <span class="m">BA→CA</span> — az általános <span class="m">AB→CD</span> (ahol mindkét betű cserélődik) NEM Kuroda-szabály, azt át kell alakítani.</li>
+      <li>Kuroda NF-ben ε-szabályból csak <span class="m">S→ε</span> megengedett (és akkor S nem állhat jobb oldalon) — a tetszőleges <span class="m">A→ε</span> kizárt.</li>
     </ul>
   </div>
 
@@ -1236,7 +1977,255 @@ Hᵢⱼ := { A | A → BC ∈ P,  és  ∃ h (i≤h&lt;j):
   Készült a <em class="t">szamelm_vizsga_keresheto.pdf</em> teljes kérdésbankjából és a <em class="t">minta_2026.pdf</em> szerkezete alapján. A ⚠ jelölt pontoknál a feltöltött kulcs hibás vagy ellentmondásos — ott a helyes elmélet szerepel. Offline is működik (a betűtípusok internet nélkül tartalék fontra váltanak).
 </div></footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
+/* ===== Állapot: azonosítók és Store ===== */
+function qhash(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h.toString(36);}
+function assignQids(){
+  document.querySelectorAll('section.part').forEach(sec=>{
+    let sel='.tf,.qa';
+    if(sec.id==='resz3')sel='.tf,.qa,.def';
+    sec.querySelectorAll(sel).forEach(el=>{
+      const src=el.querySelector('.stmt,.q,.h');
+      if(!src)return;
+      const txt=src.textContent.replace(/\s+/g,' ').trim();
+      el.dataset.qid=sec.id+'-'+qhash(txt);
+    });
+  });
+}
+const Store={
+  userKey:null, displayName:null, data:null,
+  emptyData(name){return{displayName:name,updated:Date.now(),guesses:{},marks:{},lessons:{}};},
+  lsKey(){return 'szamelm:progress:'+this.userKey;},
+  loadLocal(){
+    try{const raw=localStorage.getItem(this.lsKey());this.data=raw?JSON.parse(raw):this.emptyData(this.displayName);}
+    catch(e){this.data=this.emptyData(this.displayName);}
+    ['guesses','marks','lessons'].forEach(k=>{if(!this.data[k])this.data[k]={};});
+  },
+  saveLocal(){try{localStorage.setItem(this.lsKey(),JSON.stringify(this.data));}catch(e){}},
+  set(kind,id,val){
+    if(val===null)delete this.data[kind][id];else this.data[kind][id]=val;
+    this.data.updated=Date.now();
+    this.saveLocal();
+    if(typeof queueRemoteSave==='function')queueRemoteSave();
+  }
+};
+/* ===== Haladás ===== */
+function refreshProgress(){
+  if(!Store.data)return;
+  document.querySelectorAll('section.part .topic').forEach(t=>{
+    const cards=[];let el=t.nextElementSibling;
+    while(el&&!el.classList.contains('topic')){if(el.dataset&&el.dataset.qid)cards.push(el);el=el.nextElementSibling;}
+    if(!cards.length)return;
+    const ok=cards.filter(c=>Store.data.marks[c.dataset.qid]==='ok').length;
+    let p=t.querySelector('.tprog');
+    if(!p){p=document.createElement('span');p.className='tprog';t.appendChild(p);}
+    p.innerHTML='<span class="bar"><i style="width:'+Math.round(ok/cards.length*100)+'%"></i></span>'+ok+'/'+cards.length+' értem';
+  });
+  const dash=document.getElementById('dash');
+  if(!dash)return;
+  const parts=[['resz1','1 · Igaz/Hamis'],['resz2','2 · Rövid válaszok'],['resz3','3 · Kifejtős']];
+  let html='';
+  parts.forEach(([id,label])=>{
+    const cards=document.querySelectorAll('#'+id+' [data-qid]');
+    if(!cards.length)return;
+    const ok=[...cards].filter(c=>Store.data.marks[c.dataset.qid]==='ok').length;
+    html+='<div class="dcard"><div class="dt">'+label+'</div><div class="dn">'+ok+' / '+cards.length+' értem</div><div class="bar"><i style="width:'+Math.round(ok/cards.length*100)+'%"></i></div></div>';
+  });
+  const g=Object.values(Store.data.guesses);
+  if(g.length){
+    const okg=g.filter(x=>x==='ok').length;
+    html+='<div class="dcard"><div class="dt">Tipp-találat</div><div class="dn">'+okg+' / '+g.length+' ('+Math.round(okg/g.length*100)+'%)</div><div class="bar"><i style="width:'+Math.round(okg/g.length*100)+'%"></i></div></div>';
+  }
+  const lessons=document.querySelectorAll('#tananyag .lesson');
+  if(lessons.length){
+    const done=[...lessons].filter(l=>Store.data.lessons[l.dataset.lid]).length;
+    html+='<div class="dcard"><div class="dt">Tananyag</div><div class="dn">'+done+' / '+lessons.length+' lecke kész</div><div class="bar"><i style="width:'+Math.round(done/lessons.length*100)+'%"></i></div></div>';
+  }
+  dash.innerHTML=html;
+}
+
+/* ===== Tippelő UI ===== */
+function buildGuessUI(){
+  document.querySelectorAll('.tf').forEach(tf=>{
+    if(tf.querySelector('.guess'))return;
+    const old=tf.querySelector('.reveal');if(old)old.remove();
+    const g=document.createElement('div');g.className='guess';
+    g.innerHTML='<button class="gbtn" data-g="I">Igaz</button><button class="gbtn" data-g="H">Hamis</button><button class="gshow">Csak mutasd</button><span class="gfb"></span>';
+    tf.querySelector('.stmt').after(g);
+  });
+}
+function renderGuess(tf,guess){
+  tf.classList.add('guessed','show');
+  const ok=guess==='ok';
+  const fb=tf.querySelector('.gfb');
+  const ansTxt=tf.dataset.answer==='I'?'IGAZ':'HAMIS';
+  fb.textContent=ok?'✓ Helyes!':'✗ Nem talált — a helyes válasz: '+ansTxt;
+  fb.className='gfb '+(ok?'right':'wrong');
+  const pickedG=ok?tf.dataset.answer:(tf.dataset.answer==='I'?'H':'I');
+  const pb=tf.querySelector('.gbtn[data-g="'+pickedG+'"]');
+  if(pb)pb.classList.add('picked');
+}
+
+/* ===== Önértékelés ===== */
+const MARKBAR='<div class="markbar"><span class="ml">Értem?</span><button class="mbtn" data-m="ok">Tudtam</button><button class="mbtn" data-m="part">Részben</button><button class="mbtn" data-m="bad">Nem tudtam</button></div>';
+function buildMarkUI(){
+  document.querySelectorAll('.qa[data-qid]').forEach(qa=>{
+    if(qa.querySelector('.markbar'))return;
+    qa.insertAdjacentHTML('beforeend','<button class="showans">Mutasd a választ</button>'+MARKBAR);
+    qa.querySelector('.q').insertAdjacentHTML('afterbegin','<span class="sdot"></span>');
+  });
+  document.querySelectorAll('#resz3 .def[data-qid]').forEach(d=>{
+    if(d.querySelector('.markbar'))return;
+    d.querySelector('.h').insertAdjacentHTML('beforeend','<span class="sdot"></span>');
+    d.insertAdjacentHTML('beforeend','<div class="deffoot" style="padding:0 19px 15px"><button class="showans">Mutasd a választ</button>'+MARKBAR+'</div>');
+  });
+  document.querySelectorAll('.tf[data-qid]').forEach(tf=>{
+    if(tf.querySelector('.markbar'))return;
+    tf.querySelector('.ans').insertAdjacentHTML('beforeend',MARKBAR);
+    tf.querySelector('.stmt').insertAdjacentHTML('afterbegin','<span class="sdot"></span>');
+  });
+}
+function renderMark(card,m){
+  if(m)card.dataset.mark=m;else delete card.dataset.mark;
+  card.querySelectorAll('.mbtn').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+}
+
+/* ===== Tananyag ===== */
+function buildLessonTOC(){
+  const toc=document.getElementById('ltoc');if(!toc)return;
+  toc.innerHTML=[...document.querySelectorAll('#tananyag .lesson')].map(l=>{
+    const done=Store.data&&Store.data.lessons[l.dataset.lid];
+    return '<a href="#'+l.id+'" class="'+(done?'done':'')+'"><span class="lno">'+l.querySelector('.lno').textContent+'</span>'+l.querySelector('h3').textContent+'<span class="ldone-ic">✓</span></a>';
+  }).join('');
+}
+
+function applyState(){
+  if(!Store.data)return;
+  document.querySelectorAll('[data-qid]').forEach(card=>{
+    card.classList.remove('show');
+    renderMark(card,Store.data.marks[card.dataset.qid]||null);
+  });
+  document.querySelectorAll('.tf[data-qid]').forEach(tf=>{
+    tf.classList.remove('guessed');
+    const fb=tf.querySelector('.gfb');if(fb){fb.textContent='';fb.className='gfb';}
+    tf.querySelectorAll('.gbtn.picked').forEach(b=>b.classList.remove('picked'));
+    const g=Store.data.guesses[tf.dataset.qid];
+    if(g)renderGuess(tf,g);
+  });
+  document.querySelectorAll('#tananyag .lesson').forEach(l=>{
+    const done=!!Store.data.lessons[l.dataset.lid];
+    l.classList.toggle('done',done);
+    const b=l.querySelector('.ldone');if(b)b.textContent=done?'✓ Megtanultam':'Megtanultam';
+  });
+  buildLessonTOC();
+  refreshProgress();
+}
+
+/* ===== Firebase szinkron ===== */
+const firebaseConfig={
+  apiKey:"AIzaSyDmPV_ejrkZf8amyYiaWS65i2Z3kU_o4uw",
+  authDomain:"szamelm-bcf58.firebaseapp.com",
+  databaseURL:"https://szamelm-bcf58-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"szamelm-bcf58",
+  storageBucket:"szamelm-bcf58.firebasestorage.app",
+  messagingSenderId:"241238834650",
+  appId:"1:241238834650:web:23b79acd118c5df95dd4e3"
+};
+let db=null;
+try{if(typeof firebase!=='undefined'){firebase.initializeApp(firebaseConfig);db=firebase.database();}}catch(e){db=null;}
+function setSync(state){const d=document.getElementById('syncdot');d.className=state;d.title=state==='on'?'szinkronizálva':state==='err'?'csak helyi mentés':'kapcsolódás…';}
+function mergeData(local,remote){
+  if(!remote)return local;
+  if(!local||!Object.keys(local.guesses).length&&!Object.keys(local.marks).length&&!Object.keys(local.lessons).length)return Object.assign(Store.emptyData(Store.displayName),remote);
+  const newer=(remote.updated||0)>(local.updated||0)?remote:local;
+  const older=newer===remote?local:remote;
+  return{displayName:newer.displayName||local.displayName,updated:Math.max(remote.updated||0,local.updated||0),
+    guesses:Object.assign({},older.guesses,newer.guesses),
+    marks:Object.assign({},older.marks,newer.marks),
+    lessons:Object.assign({},older.lessons,newer.lessons)};
+}
+function remoteLoad(){
+  if(!db){setSync('err');return;}
+  setSync('');
+  db.ref('progress/'+Store.userKey).get().then(snap=>{
+    Store.data=mergeData(Store.data,snap.exists()?snap.val():null);
+    ['guesses','marks','lessons'].forEach(k=>{if(!Store.data[k])Store.data[k]={};});
+    Store.saveLocal();
+    setSync('on');
+    applyState();
+  }).catch(()=>setSync('err'));
+}
+let saveTimer=null;
+function queueRemoteSave(){
+  if(!db)return;
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    db.ref('progress/'+Store.userKey).set(Store.data).then(()=>setSync('on')).catch(()=>setSync('err'));
+  },2000);
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'&&db&&Store.data&&Store.userKey){clearTimeout(saveTimer);db.ref('progress/'+Store.userKey).set(Store.data).catch(()=>{});}
+});
+
+/* ===== Belépés ===== */
+function normUserKey(name){return name.trim().toLowerCase().replace(/[.#$\[\]\/\s]+/g,'_');}
+function showLogin(){
+  document.getElementById('login').classList.remove('hide');
+  document.getElementById('login-name').focus();
+}
+function doLogin(rawName){
+  const name=rawName.trim();
+  if(name.replace(/\s/g,'').length<2){document.getElementById('login-err').style.display='block';return;}
+  document.getElementById('login-err').style.display='none';
+  Store.displayName=name;
+  Store.userKey=normUserKey(name);
+  localStorage.setItem('szamelm:user',JSON.stringify({key:Store.userKey,name:name}));
+  Store.loadLocal();
+  document.getElementById('uname').textContent=name;
+  document.getElementById('login').classList.add('hide');
+  if(typeof remoteLoad==='function')remoteLoad();
+  applyState();
+}
+function topicCards(t){
+  const cards=[];let el=t.nextElementSibling;
+  while(el&&!el.classList.contains('topic')){if(el.dataset&&el.dataset.qid)cards.push(el);el=el.nextElementSibling;}
+  return cards;
+}
+function buildResetUI(){
+  ['resz1','resz2','resz3'].forEach(id=>{
+    const sec=document.getElementById(id);if(!sec)return;
+    const h=sec.querySelector('.part-head h2');
+    if(h&&!h.querySelector('.resetbtn'))h.insertAdjacentHTML('beforeend','<button class="resetbtn" data-rs="'+id+'">összes törlése</button>');
+    sec.querySelectorAll('.topic').forEach((t,i)=>{
+      if(topicCards(t).length&&!t.querySelector('.resetbtn'))t.insertAdjacentHTML('beforeend','<button class="resetbtn" data-rt="">téma törlése</button>');
+    });
+  });
+}
+function resetCards(cards){
+  cards.forEach(c=>{
+    Store.set('guesses',c.dataset.qid,null);
+    Store.set('marks',c.dataset.qid,null);
+  });
+  applyState();
+}
+function boot(){
+  assignQids();
+  buildGuessUI();
+  buildMarkUI();
+  buildResetUI();
+  document.getElementById('login-go').onclick=()=>doLogin(document.getElementById('login-name').value);
+  document.getElementById('login-name').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin(e.target.value);});
+  document.getElementById('switchuser').onclick=()=>{
+    document.getElementById('login-name').value='';
+    showLogin();
+  };
+  const saved=localStorage.getItem('szamelm:user');
+  if(saved){try{doLogin(JSON.parse(saved).name);}catch(e){showLogin();}}
+  else showLogin();
+}
+
 /* ===== Fogalom-adatbázis (egymásra épülő rétegek) ===== */
 const LAYERS=[
  {n:1,t:"Alapfogalmak",d:"Ábécé, szó, nyelv — minden ezekből épül."},
@@ -1282,7 +2271,7 @@ const C={
  lancm:{t:"Láncmentesítés",layer:5,pre:["gramm"],short:"A→B láncszabályok eltüntetése",body:`Minden A-ra H(A) = a csupa lánccal elérhető N-ek: Hᵢ₊₁(A)=Hᵢ(A) ∪ {B | C→B∈P, C∈Hᵢ(A)}, H₀(A)={A}. Ezután A megkapja minden H(A)-beli N <b>nem-lánc</b> jobb oldalát, a láncszabályokat eldobjuk.`},
  hosszred:{t:"3-típusú hosszredukció",layer:5,pre:["linearis","normalforma"],short:"Hosszú jobb oldalak feldarabolása",body:`A→a₁…aₙB lecserélve: A→a₁Z₁, Z₁→a₂Z₂, …, Zₙ₋₁→aₙB. A→a₁…aₘ pedig: A→a₁Y₁, …, Yₘ₋₁→aₘE, E→ε. A végén minden szabály X→aY, X→Y vagy X→ε alakú.`},
  chomskynf:{t:"Chomsky normálforma",layer:5,pre:["cf","epsm","lancm"],short:"A→BC, A→a, S→ε",body:`Minden CF grammatikához van vele ekvivalens ChNF. Szabályok: A→BC (ahol B,C≠S, ha S→ε∈P), A→a, és S→ε. Ez kell a {{cyk|CYK}}-hoz, és ettől lesz a {{fa|levezetési fa}} bináris.`},
- kuroda:{t:"Kuroda normálforma",layer:5,pre:["cs"],short:"A→BC, AB→CD, A→a, S→ε",body:`A környezetfüggő nyelvek normálformája. <b>Vigyázat:</b> AB→CD (nem AB→AC!). Minden hossznemcsökkentő grammatika átalakítható Kurodává, de nem automatikusan az.`},
+ kuroda:{t:"Kuroda normálforma",layer:5,pre:["cs"],short:"A→BC, AB→AC, BA→CA, A→a, S→ε",body:`A környezetfüggő nyelvek normálformája. Megengedett szabályok: A→BC, AB→AC, BA→CA, A→a, és (KES-sel) S→ε. <b>Vigyázat:</b> a kontextus megmarad az egyik oldalon — az általános AB→CD (mindkét betű cserélődik) NEM Kuroda-szabály! Minden hossznemcsökkentő grammatika átalakítható Kurodává, de nem automatikusan az.`},
 
  automata:{t:"Automata (áttekintés)",layer:6,pre:["hierarchia"],short:"Felismerő gép minden szinthez",body:`L₃ → {{dfa|DVA}}/{{nfa|FNA}}; L₂ → {{va|veremautomata}}; L₁ → lineárisan korlátolt Turing-gép; L₀ → Turing-gép. Az automata elfogad egy szót, ha elér egy elfogadó konfigurációt.`},
  dfa:{t:"Determinisztikus véges automata (DVA)",layer:6,pre:["regnyelv"],short:"δ:Q×Σ→Q, egy kezdőállapot",body:`Ötös (Q,Σ,δ,q₀,F); minden állapot-betű párra pontosan egy következő állapot. {{osszefuggo|Összefüggő}}, ha minden állapot elérhető q₀-ból. A {{minimal|maradéknyelvek}} adják a minimális DVA állapotait.`},
@@ -1356,8 +2345,57 @@ document.querySelectorAll('.cbar[data-c]').forEach(bar=>{
 
 /* ===== Globális kattintáskezelő ===== */
 document.addEventListener('click',e=>{
-  const rev=e.target.closest('.reveal');
-  if(rev){rev.closest('.tf').classList.add('show');return;}
+  const gb=e.target.closest('.gbtn');
+  if(gb){
+    const tf=gb.closest('.tf');
+    const correct=gb.dataset.g===tf.dataset.answer;
+    gb.classList.add('picked');
+    const res=correct?'ok':'bad';
+    Store.set('guesses',tf.dataset.qid,res);
+    Store.set('marks',tf.dataset.qid,res);
+    renderGuess(tf,res);
+    renderMark(tf,res);
+    refreshProgress();
+    return;
+  }
+  const gs=e.target.closest('.gshow');
+  if(gs){gs.closest('.tf').classList.add('show');return;}
+  const rb=e.target.closest('.resetbtn');
+  if(rb){
+    if(rb.dataset.rs!==undefined&&rb.dataset.rs)resetCards([...document.querySelectorAll('#'+rb.dataset.rs+' [data-qid]')]);
+    else resetCards(topicCards(rb.closest('.topic')));
+    return;
+  }
+  const sa=e.target.closest('.showans');
+  if(sa){sa.closest('.qa,.def').classList.add('show');return;}
+  const mb=e.target.closest('.mbtn');
+  if(mb){
+    const card=mb.closest('[data-qid]');
+    const cur=Store.data.marks[card.dataset.qid];
+    const next=cur===mb.dataset.m?null:mb.dataset.m;
+    Store.set('marks',card.dataset.qid,next);
+    renderMark(card,next);
+    refreshProgress();
+    return;
+  }
+  const ld=e.target.closest('.ldone');
+  if(ld){
+    const l=ld.closest('.lesson');
+    const cur=!!Store.data.lessons[l.dataset.lid];
+    Store.set('lessons',l.dataset.lid,cur?null:true);
+    l.classList.toggle('done',!cur);
+    ld.textContent=!cur?'✓ Megtanultam':'Megtanultam';
+    buildLessonTOC();refreshProgress();
+    return;
+  }
+  const golink=e.target.closest('.golinks a[data-tab]');
+  if(golink){
+    e.preventDefault();
+    activate(golink.dataset.tab);
+    const target=document.querySelector(golink.getAttribute('href'));
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
   const go=e.target.closest('.clink');
   if(go){gotoConcept(go.dataset.go);return;}
   const chip=e.target.closest('.chip');
@@ -1385,13 +2423,6 @@ document.querySelectorAll('table.grid').forEach(t=>{
   t.parentNode.insertBefore(w,t);w.appendChild(t);
 });
 
-/* ===== Gyakorló mód ===== */
-const prac=document.getElementById('prac');
-prac.onchange=()=>{
-  document.body.classList.toggle('practice',prac.checked);
-  if(!prac.checked)document.querySelectorAll('.tf.show').forEach(t=>t.classList.remove('show'));
-};
-
 /* ===== Keresés ===== */
 const search=document.getElementById('search');
 search.oninput=()=>{
@@ -1400,6 +2431,23 @@ search.oninput=()=>{
     el.classList.toggle('hide',!(!q||el.textContent.toLowerCase().includes(q)));
   });
 };
+
+/* ===== Szűrő ===== */
+const onlyBad=document.getElementById('onlybad');
+onlyBad.onchange=()=>document.body.classList.toggle('filterbad',onlyBad.checked);
+
+/* ===== Tanulós mód ===== */
+const studyCb=document.getElementById('study');
+studyCb.checked=localStorage.getItem('szamelm:study')==='1';
+document.body.classList.toggle('study',studyCb.checked);
+studyCb.onchange=()=>{
+  document.body.classList.toggle('study',studyCb.checked);
+  localStorage.setItem('szamelm:study',studyCb.checked?'1':'0');
+};
+
+boot();
 </script>
 </body>
 </html>
+
+
