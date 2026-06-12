@@ -66,8 +66,8 @@ section.part.active{display:block}
 .badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-weight:600;font-size:.7rem;letter-spacing:.1em;padding:3px 10px;border-radius:6px}
 .badge.i{background:var(--true-bg);color:var(--true);border:1px solid var(--true-bd)}
 .badge.h{background:var(--false-bg);color:var(--false);border:1px solid var(--false-bd)}
-.tf[data-answer="I"]{border-left-color:var(--true)}
-.tf[data-answer="H"]{border-left-color:var(--false)}
+.tf.show[data-answer="I"],body.study .tf[data-answer="I"]{border-left-color:var(--true)}
+.tf.show[data-answer="H"],body.study .tf[data-answer="H"]{border-left-color:var(--false)}
 .note{margin-top:11px;background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:7px;padding:10px 13px;font-size:.92em;color:var(--read)}
 .note b{color:var(--warn)}
 /* Tippelés */
