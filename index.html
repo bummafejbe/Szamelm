@@ -290,9 +290,9 @@ mark{background:rgba(231,178,90,.25);color:#fff;padding:0 3px;border-radius:3px}
 <main class="wrap">
 
 <section class="part" id="tananyag">
-  <div class="part-head"><div class="no">Tananyag · 7 lecke</div>
+  <div class="part-head"><div class="no">Tananyag · 8 lecke</div>
     <h2>Egymásra épülő leckék</h2>
-    <p class="lead">A teljes anyag hét leckében, az alapoktól a tételekig. Minden lecke a korábbiakra épül — haladj sorban. A lecke végén linkek visznek a hozzá tartozó gyakorló kérdésekhez.</p>
+    <p class="lead">A teljes anyag nyolc leckében, az alapoktól a tételekig. Minden lecke a korábbiakra épül — haladj sorban. A lecke végén linkek visznek a hozzá tartozó gyakorló kérdésekhez.</p>
   </div>
   <div id="ltoc"></div>
 
@@ -930,6 +930,105 @@ H_{i,j} = {A | A→YZ ∈ P, Y∈H_{i,h}, Z∈H_{h+1,j} valamely i≤h&lt;j-re}<
         <a data-tab="resz3" href="#r3-algoritmus">→ 3. rész: Algoritmus és maradéknyelvek</a>
         <a data-tab="resz3" href="#r3-pumpalo">→ 3. rész: Pumpáló lemmák</a>
         <a data-tab="resz3" href="#r3-zartsag">→ 3. rész: Zártsági konstrukciók</a>
+      </div>
+    </div>
+  </div>
+  <div class="lesson" id="lecke-8" data-lid="l8">
+    <div class="lh"><span class="lno">8. LECKE</span><h3>A három szint összefoglalója — típusok, NF-ek, kapcsolatok</h3><button class="ldone">Megtanultam</button></div>
+    <div class="lpre"><span>Előfeltétel:</span><a href="#lecke-4" style="color:var(--acc)">4. lecke — Grammatikák</a><a href="#lecke-5" style="color:var(--acc)">5. lecke — Normálformák</a></div>
+    <div class="lbody">
+      <p><strong>Miért fontos:</strong> az 1/2/3-as típusok, grammatikák és normálformák nem külön szigetek — egymásba ágyazott szintek, ahol minden szintnek megvan a saját szabályalakja, NF-je, gépe és eldönthetőségi státusza. Ezt az összképet a vizsga szinte minden részénél feltételezi: ha zavar, miért más az ε-kezelés 1-esnél és 2-esnél, miért nem NLR az összes 2-es, vagy hogy a Kuroda NF miért tartalmazza a Chomsky NF-t — ez a lecke ezt tisztázza.</p>
+
+      <h4>A nagy kép egy táblázatban</h4>
+      <div class="def gold"><div class="h">Típusonkénti összehasonlítás</div><div class="body">
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Szempont</th><th>3-as (reguláris)</th><th>2-es (CF)</th><th>1-es (CS)</th></tr>
+          <tr><td><strong>Grammatika alakja</strong></td><td><span class="m">A→uB</span> vagy <span class="m">A→u</span>, <span class="m">u∈Σ*</span></td><td><span class="m">A→v</span>, <span class="m">v∈(N∪Σ)*</span></td><td><span class="m">αAβ→αvβ</span>, <span class="m">v≠ε</span> (+ KES)</td></tr>
+          <tr><td><strong>Normálforma</strong></td><td>3-as NF: <span class="m">A→aB</span>, <span class="m">A→a</span></td><td>Chomsky NF: <span class="m">A→BC</span>, <span class="m">A→a</span></td><td>Kuroda NF: <span class="m">A→BC</span>, <span class="m">AB→AC</span>, <span class="m">BA→CA</span>, <span class="m">A→a</span></td></tr>
+          <tr><td><strong>NLR-rel ekvivalens?</strong></td><td>NLR ⊇ L₃ (de L₃ ≠ L₁)</td><td>NLR ⊇ L₂ (de L₂ ≠ L₁)</td><td><strong>pontosan L₁ = NLR osztály</strong></td></tr>
+          <tr><td><strong>Automata</strong></td><td>DVA / NDVA</td><td>veremautomata (VA)</td><td>lineárisan korlátolt TG (LBA)</td></tr>
+          <tr><td><strong>Szóprobléma</strong></td><td>eldönthető (lineáris)</td><td>eldönthető (köbös, CYK)</td><td>eldönthető (véges sok mondatforma)</td></tr>
+          <tr><td><strong>Példa-nyelv a szinthez</strong></td><td><span class="m">a*b*</span></td><td><span class="m">{aⁿbⁿ | n≥0}</span></td><td><span class="m">{aⁿbⁿcⁿ | n≥0}</span></td></tr>
+        </table></div>
+      </div></div>
+
+      <h4>A szabályalakok egymásba ágyazása</h4>
+      <div class="def blue"><div class="h">Miért nem „fér bele" minden 2-es szabály az 1-esbe?</div><div class="body">
+        <p>A 2-es (CF) grammatikában <span class="m">A → v</span> alakú szabály szerepel, ahol v <em class="t">bármilyen</em> hosszú lehet — akár rövidebb is, mint a bal oldal egyetlen A szimbóluma. Példa: <span class="m">A → ε</span> lehetséges. Ez <strong>hosszcsökkentő</strong> (<span class="m">|A|=1 &gt; 0=|ε|</span>), ezért az 1-es típus szabályai <strong>kizárják</strong> (kivéve a KES-es <span class="m">S→ε</span>-t).</p>
+        <p>Az 1-es típus szabálya <span class="m">αAβ → αvβ</span> (v≠ε): a bal oldal és a jobb oldal ugyanolyan hosszú <em class="t">környezettel</em> bővített, csak A cserélődik v-re, és <span class="m">|αvβ| ≥ |αAβ|</span> (mert v≠ε és |α|+|β| megmarad). Ez garantálja a hossznemcsökkentést.</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Szabály</th><th>3-asba?</th><th>2-esbe?</th><th>1-esbe?</th></tr>
+          <tr><td><span class="m">A → aB</span></td><td class="y">✓</td><td class="y">✓</td><td class="y">✓ (α=ε, β=ε, v=aB — de 1-esben <span class="m">|v|≥1</span>)</td></tr>
+          <tr><td><span class="m">A → ε</span></td><td class="y">✓ (ahol megengedett)</td><td class="y">✓</td><td class="n">✗ — hosszcsökkentő!</td></tr>
+          <tr><td><span class="m">A → BC</span></td><td class="n">✗</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><td><span class="m">AB → AC</span></td><td class="n">✗</td><td class="n">✗ — bal oldal &gt; 1 szimbólum</td><td class="y">✓ — Kuroda-szabály</td></tr>
+          <tr><td><span class="m">AB → CD</span></td><td class="n">✗</td><td class="n">✗</td><td class="n">✗ — nem Kuroda (mindkét betű változik)</td></tr>
+        </table></div>
+      </div></div>
+
+      <h4>A normálformák egymáshoz való viszonya</h4>
+      <div class="def blue"><div class="h">Chomsky NF ⊂ Kuroda NF (szabályszinten)</div><div class="body">
+        <p>A Kuroda NF szabályai: <span class="m">A→a</span>, <span class="m">A→BC</span>, <span class="m">AB→AC</span>, <span class="m">BA→CA</span>. A Chomsky NF szabályai: <span class="m">A→a</span>, <span class="m">A→BC</span>. Mivel minden Chomsky-szabály egyúttal Kuroda-szabály is (az első két alak azonos), <strong>minden ChNF grammatika egyben Kuroda NF-ű is</strong> — fordítva nem igaz, mert az <span class="m">AB→AC</span> alakú szabályok csak Kuroda NF-ben szerepelhetnek.</p>
+        <p>Ez tükrözi a tartalmazást: <span class="m">L₂ ⊊ L₁</span> — a CF nyelvek egy <em class="t">részhalmazát</em> alkotják a CS nyelveknek, ezért minden CF grammatika (ChNF-ben) érvényes CS grammatika (Kuroda NF-ben) is.</p>
+      </div></div>
+      <div class="def blue"><div class="h">3-as NF vs. Chomsky NF — miért nem ugyanaz?</div><div class="body">
+        <p>A 3-as NF-ben az <span class="m">A→aB</span> szabály bal oldalán terminális <em class="t">és</em> nemterminális keveredik a jobb oldalon. A Chomsky NF-ben viszont minden szabály vagy <strong>csak terminális</strong> (<span class="m">A→a</span>), vagy <strong>csak nemterminálisok</span> (<span class="m">A→BC</span>) a jobb oldalon — <span class="m">A→aB</span> alakú szabály <strong>nem Chomsky NF-ű</strong>.</p>
+        <p>Tehát szabályszinten <strong>3NF ⊄ ChNF és ChNF ⊄ 3NF</strong>. Mégis: <em class="t">nyelvosztály szinten</em> L₃ ⊊ L₂, vagyis minden reguláris nyelvhez létezik ChNF grammatika is (például az automatából leolvasva ā→a álterminálisokkal és A→āB megfeleltetéssel áthozva, majd lánc- és ε-mentesítéssel).</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th></th><th>3NF-szabály maga</th><th>ChNF-szabály maga</th><th>Kuroda-szabály maga</th></tr>
+          <tr><td><strong>3NF grammatika</strong></td><td class="y">igen</td><td class="n">nem feltétlenül</td><td class="n">nem feltétlenül</td></tr>
+          <tr><td><strong>ChNF grammatika</strong></td><td class="n">nem feltétlenül</td><td class="y">igen</td><td class="y">igen (ChNF ⊆ Kuroda)</td></tr>
+          <tr><td><strong>Kuroda NF grammatika</strong></td><td class="n">nem feltétlenül</td><td class="n">nem feltétlenül</td><td class="y">igen</td></tr>
+        </table></div>
+      </div></div>
+
+      <h4>NLR ↔ L₁: a kulcs-összefüggés</h4>
+      <div class="def gold"><div class="h">Miért egyenlő a hossznemcsökkentő és a CS osztály?</div><div class="body">
+        <p>Az egyenlőség <strong>két irányban</strong> áll fenn:</p>
+        <ul>
+          <li><strong>CS ⊆ NLR:</strong> minden <span class="m">αAβ → αvβ</span> szabályban <span class="m">|αvβ| ≥ |αAβ|</span> (mivel v≠ε), tehát minden 1-es típusú grammatika hossznemcsökkentő.</li>
+          <li><strong>NLR ⊆ CS:</strong> ha G hossznemcsökkentő, akkor a levezetésben minden mondatforma legfeljebb <span class="m">|u|</span> hosszú (u a célszó) — ezért a levezetési fa véges mélységű, és az L(G)∈L₁ bizonyítható (a Kuroda NF átalakítással formalizálható).</li>
+        </ul>
+        <p>Következmény: <strong>az 1-es típusú szóprobléma eldönthető</strong>, mert a hossznemcsökkentés miatt a levezetési lépések során soha nem keletkezhet |u|-nál hosszabb mondatforma — véges sok mondatformát kell megvizsgálni (ezek száma nagy, de véges).</p>
+        <p class="m blk">L₃ ⊊ L₂ ⊊ L₁ = {L(G) | G hossznemcsökkentő} ⊊ L₀</p>
+        <div class="note"><b>⚠ Figyelem:</b> az egyenlőség <em class="t">nyelvosztály szinten</em> áll fenn. Egy konkrét hossznemcsökkentő grammatika szabályai nem feltétlenül <span class="m">αAβ→αvβ</span> alakúak — pl. <span class="m">ABC→ABD</span> hossznemcsökkentő, de nem 1-es típusú szabályalak. A grammatikát <em class="t">át kell alakítani</em> (Kuroda NF-re).</div>
+      </div></div>
+
+      <h4>ε-kezelés szintenként — miért más a szabály?</h4>
+      <div class="def blue"><div class="h">Miért más az ε-szabály minden szinten?</div><div class="body">
+        <p>Az ε-kezelés szintenként eltér, mert az ε-szabály (<span class="m">A→ε</span>) <em class="t">hosszcsökkentő</em> — ez a 1-es típusból kizárja (kivéve a KES-t):</p>
+        <div class="tablewrap"><table class="grid">
+          <tr><th>Típus</th><th>ε-szabály engedélyezett?</th><th>Feltétel</th></tr>
+          <tr><td>3-as</td><td class="y">igen</td><td>nincs külön megkötés (A→ε bármely A-ra)</td></tr>
+          <tr><td>2-es</td><td class="y">igen</td><td>nincs külön megkötés (A→ε bármely A-ra)</td></tr>
+          <tr><td>1-es</td><td class="n">csak KES</td><td>csak <span class="m">S→ε</span>, és S nem szerepelhet egyetlen jobb oldalon sem</td></tr>
+        </table></div>
+        <p>A normálformák (ChNF, Kuroda NF) az ε-mentesítés lépésével <em class="t">eltüntetik</em> az összes <span class="m">A→ε</span> szabályt (U-halmaz módszer), és csak a <span class="m">S→ε</span>-t hagyják meg — ezért van a KES mindkét NF-ben.</p>
+      </div></div>
+
+      <h4>Az eszközök ekvivalencia-lánca</h4>
+      <div class="def green"><div class="h">Szintenként: mi mivel ekvivalens?</div><div class="body">
+        <p class="m blk">L₃:  3-as típusú grammatika  ⟺  3-as NF grammatika  ⟺  reguláris kifejezés  ⟺  NDVA  ⟺  DVA
+L₂:  2-es típusú grammatika  ⟺  Chomsky NF grammatika  ⟺  veremautomata (VA)
+L₁:  1-es típusú grammatika  ⟺  hossznemcsökkentő grammatika  ⟺  Kuroda NF grammatika  ⟺  LBA</p>
+        <p>Az átjárások mind konstruktívak (van algoritmus a konverzióra). A 3-as szinten <strong>5 ekvivalens eszköz</strong> van — ez a Kleene-tétel. A 2-esnél 2 ekvivalens grammatika-alak + a VA. Az 1-esnél 3 ekvivalens grammatika-alak + az LBA.</p>
+        <p><strong>Fontos korlát:</strong> ezek az ekvivalenciák <em class="t">nyelvosztály szinten</em> érvényesek — egy konkrét grammatikát <em class="t">át kell alakítani</em> az ekvivalens alakra (nem automatikusan az).</p>
+      </div></div>
+
+      <div class="callout"><h4>Tipikus vizsgacsapdák ebben a témában</h4>
+        <ul>
+          <li>„Minden NLR grammatika CS (1-es típusú)" — <strong>HAMIS</strong>: NLR = CS <em class="t">nyelvosztály szinten</em>, de egy konkrét NLR grammatika szabályai nem feltétlenül <span class="m">αAβ→αvβ</span> alakúak.</li>
+          <li>„Minden NLR grammatika Kuroda NF-ű" — <strong>HAMIS</strong>: hasonló ok, az <em class="t">átalakíthatóság</em> ≠ <em class="t">már az</em>.</li>
+          <li>„A 2-es típus szabályai beleférnek az 1-esbe" — <strong>HAMIS</strong>: az <span class="m">A→ε</span> szabály 2-esben megengedett, 1-esben nem (KES!).</li>
+          <li>„ChNF ⊆ Kuroda NF" — <strong>IGAZ</strong>: minden <span class="m">A→BC</span> és <span class="m">A→a</span> egyben Kuroda-szabály is.</li>
+          <li>„3NF ⊆ ChNF" — <strong>HAMIS</strong>: az <span class="m">A→aB</span> szabály nem Chomsky NF-ű.</li>
+          <li>Az 1-es szóprobléma azért eldönthető, mert a <strong>levezetés nem nőhet</strong> a célszónál hosszabbra — véges keresési tér.</li>
+        </ul>
+      </div>
+      <div class="golinks">
+        <a data-tab="resz1" href="#r1-gramm">→ 1. rész: Grammatikák, típusok</a>
+        <a data-tab="resz1" href="#r1-gramm">→ 1. rész: Normálformák</a>
+        <a data-tab="resz3" href="#r3-normalformak">→ 3. rész: NF-tételek kifejtve</a>
       </div>
     </div>
   </div>
